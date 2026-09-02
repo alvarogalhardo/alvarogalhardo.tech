@@ -43,27 +43,40 @@ describe('dicionário', () => {
 
 describe('localizePath', () => {
   it('mantém o caminho sem prefixo em en', () => {
-    expect(localizePath('/writing', 'en')).toBe('/writing');
+    expect(localizePath('/writing', 'en')).toBe('/writing/');
   });
   it('prefixa com /pt em pt', () => {
-    expect(localizePath('/writing', 'pt')).toBe('/pt/writing');
+    expect(localizePath('/writing', 'pt')).toBe('/pt/writing/');
   });
   it('trata a raiz em pt', () => {
-    expect(localizePath('/', 'pt')).toBe('/pt');
+    expect(localizePath('/', 'pt')).toBe('/pt/');
   });
 });
 
 describe('alternatePath', () => {
   it('mapeia rota en para a equivalente em pt', () => {
-    expect(alternatePath(new URL('https://x.dev/writing'), 'pt')).toBe('/pt/writing');
+    expect(alternatePath(new URL('https://x.dev/writing'), 'pt')).toBe('/pt/writing/');
   });
   it('mapeia rota pt para a equivalente em en', () => {
-    expect(alternatePath(new URL('https://x.dev/pt/writing'), 'en')).toBe('/writing');
+    expect(alternatePath(new URL('https://x.dev/pt/writing'), 'en')).toBe('/writing/');
   });
   it('mapeia a home em pt de volta para a raiz', () => {
     expect(alternatePath(new URL('https://x.dev/pt'), 'en')).toBe('/');
   });
   it('mapeia a raiz para /pt', () => {
-    expect(alternatePath(new URL('https://x.dev/'), 'pt')).toBe('/pt');
+    expect(alternatePath(new URL('https://x.dev/'), 'pt')).toBe('/pt/');
+  });
+});
+
+describe('barra final consistente com o build directory', () => {
+  it('preserva a âncora ao normalizar', () => {
+    expect(localizePath('/#work', 'pt')).toBe('/pt/#work');
+    expect(localizePath('/#work', 'en')).toBe('/#work');
+  });
+  it('não duplica barra em caminho que já termina com uma', () => {
+    expect(localizePath('/writing/', 'pt')).toBe('/pt/writing/');
+  });
+  it('a raiz em en continua sendo apenas /', () => {
+    expect(localizePath('/', 'en')).toBe('/');
   });
 });

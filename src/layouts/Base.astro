@@ -1,0 +1,38 @@
+---
+import '../styles/global.css';
+import ThemeScript from '../components/ThemeScript.astro';
+import { getLangFromUrl, alternatePath, withTrailingSlash } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const canonical = new URL(withTrailingSlash(Astro.url.pathname), Astro.site);
+const enHref = new URL(alternatePath(Astro.url, 'en'), Astro.site);
+const ptHref = new URL(alternatePath(Astro.url, 'pt'), Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="pt" href={ptHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
