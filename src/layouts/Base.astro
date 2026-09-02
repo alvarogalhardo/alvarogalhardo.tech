@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Texture from '../components/Texture.astro';
 import Reveal from '../components/Reveal.astro';
-import { getLangFromUrl, alternatePath, withTrailingSlash } from '../i18n/utils';
+import { getLangFromUrl, alternatePath, localizePath, withTrailingSlash } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -18,6 +18,21 @@ const lang = getLangFromUrl(Astro.url);
 const canonical = new URL(withTrailingSlash(Astro.url.pathname), Astro.site);
 const enHref = new URL(alternatePath(Astro.url, 'en'), Astro.site);
 const ptHref = new URL(alternatePath(Astro.url, 'pt'), Astro.site);
+const ogImage = new URL(`/og/${ogSlug}.png`, Astro.site);
+const feedHref = new URL(localizePath('/rss.xml', lang), Astro.site);
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Alvaro Galhardo',
+  url: Astro.site?.href,
+  jobTitle: lang === 'pt' ? 'Engenheiro Backend' : 'Backend Engineer',
+  email: 'mailto:alvaromgfernandes@gmail.com',
+  sameAs: [
+    'https://github.com/alvarogalhardo',
+    'https://www.linkedin.com/in/alvarogalhardo'
+  ]
+};
 ---
 
 <!doctype html>
@@ -35,6 +50,14 @@ const ptHref = new URL(alternatePath(Astro.url, 'pt'), Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Alvaro Galhardo" />
+    <meta property="og:locale" content={lang === 'pt' ? 'pt_BR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'pt' ? 'en_US' : 'pt_BR'} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" type="application/rss+xml" title="Alvaro Galhardo" href={feedHref} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(person)} />
     <slot name="head" />
   </head>
   <body>

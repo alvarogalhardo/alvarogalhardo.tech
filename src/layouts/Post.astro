@@ -15,6 +15,20 @@ const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
   month: 'long',
   year: 'numeric'
 });
+
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString(),
+  inLanguage: entry.data.lang === 'pt' ? 'pt-BR' : 'en-US',
+  author: {
+    '@type': 'Person',
+    name: 'Alvaro Galhardo',
+    url: 'https://alvarogalhardo.dev'
+  }
+};
 ---
 
 <Base
@@ -22,6 +36,12 @@ const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
   description={entry.data.summary}
   ogSlug={slug}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(article)}
+    slot="head"
+  />
   <main class="wrap" id="top">
     <article>
       <p class="mono date">

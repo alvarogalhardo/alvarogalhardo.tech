@@ -80,3 +80,17 @@ describe('barra final consistente com o build directory', () => {
     expect(localizePath('/', 'en')).toBe('/');
   });
 });
+
+describe('caminhos de arquivo não recebem barra final', () => {
+  it('o feed rss mantém o caminho exato', () => {
+    expect(localizePath('/rss.xml', 'en')).toBe('/rss.xml');
+    expect(localizePath('/rss.xml', 'pt')).toBe('/pt/rss.xml');
+  });
+  it('outros arquivos também', () => {
+    expect(localizePath('/cv.pdf', 'en')).toBe('/cv.pdf');
+    expect(localizePath('/og/home.png', 'en')).toBe('/og/home.png');
+  });
+  it('mas diretórios continuam recebendo', () => {
+    expect(localizePath('/writing', 'en')).toBe('/writing/');
+  });
+});
