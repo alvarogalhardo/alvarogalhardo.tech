@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; background: var(--bg, #12161c); }
+  body { margin: 0; background: transparent; transition: background 220ms ease, color 220ms ease; }
+  * { box-sizing: border-box; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+  ::selection { background: var(--accent); color: var(--bg); }
+</style>
+</helmet>
+
+<div style="{{ vars }}">
+<div aria-hidden="true" style="{{ textureStyle }}"></div>
+<div style="position:relative; z-index:1; min-height:100vh; color:var(--fg); font-family:'Newsreader', Georgia, serif; transition:color 220ms ease;">
+
+  <header style="position:sticky; top:0; z-index:20; background:var(--bgFade); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);">
+    <div style="{{ S.headRow }}">
+      <a href="#top" style="display:flex; align-items:center; gap:9px; color:var(--fg);">
+        <span style="width:6px; height:6px; border-radius:50%; background:var(--accent);"></span>
+        <span>Alvaro</span>
+      </a>
+      <nav style="{{ S.nav }}">
+        <div style="{{ S.navLinks }}">
+          <a href="#work" style="padding:2px 0; border-bottom:1px solid transparent;" style-hover="border-bottom-color:var(--accent)">{{ T.lExp }}</a>
+          <a href="#projects" style="padding:2px 0; border-bottom:1px solid transparent;" style-hover="border-bottom-color:var(--accent)">{{ T.lProj }}</a>
+          <a href="#writing" style="padding:2px 0; border-bottom:1px solid transparent;" style-hover="border-bottom-color:var(--accent)">{{ T.lWriting }}</a>
+          <a href="#shelf" style="padding:2px 0; border-bottom:1px solid transparent;" style-hover="border-bottom-color:var(--accent)">{{ T.lBooks }}</a>
+          <span style="width:1px; height:14px; background:var(--line);"></span>
+          <button onClick="{{ toggleLang }}" title="Language" style="{{ S.toggle }}" style-hover="border-color:var(--accent); color:var(--accent)">{{ langLabel }}</button>
+          <button onClick="{{ toggleTheme }}" title="Theme" style="{{ S.toggle }}" style-hover="border-color:var(--accent); color:var(--accent)">{{ themeIcon }}</button>
+        </div>
+        <button onClick="{{ openMenu }}" title="{{ T.mMenu }}" aria-label="{{ T.mMenu }}" style="{{ S.hamburger }}" style-hover="border-color:var(--accent)">
+          <span style="{{ S.bar }}"></span>
+          <span style="{{ S.bar }}"></span>
+          <span style="{{ S.bar }}"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" style="{{ S.main }}">
+
+    <section style="{{ S.intro }}">
+      <p data-reveal style="margin:0 0 22px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent);">{{ T.role }}</p>
+      <h1 data-reveal style="{{ S.h1 }}">{{ T.greeting }}</h1>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <p data-reveal style="{{ S.lead }}">{{ T.blurb }}</p>
+        <p data-reveal style="{{ S.body }}">{{ T.aboutP1 }}</p>
+        <p data-reveal style="{{ S.body }}">{{ T.aboutP2 }}</p>
+      </div>
+      <div data-reveal style="display:flex; flex-wrap:wrap; gap:10px; margin-top:34px; font-family:'JetBrains Mono', monospace; font-size:12px;">
+        <a href="#contact" style="{{ S.btnA }}" style-hover="background:var(--accent); color:var(--bg)">{{ T.email }}</a>
+        <a href="#top" style="{{ S.btnB }}" style-hover="border-color:var(--fg); color:var(--fg)">{{ T.resume }}</a>
+        <a href="#top" style="{{ S.btnB }}" style-hover="border-color:var(--fg); color:var(--fg)">GitHub</a>
+      </div>
+    </section>
+
+    <section id="work" style="{{ S.sec }}">
+      <div data-reveal style="display:flex; align-items:center; gap:14px; margin-bottom:12px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);">
+        <span style="color:var(--accent);">01</span><span>{{ T.lExp }}</span>
+        <span style="flex:1; height:1px; background:var(--line);"></span>
+      </div>
+      <sc-for list="{{ T.exp }}" as="e" hint-placeholder-count="3">
+        <div data-reveal style="{{ S.row }}">
+          <span style="{{ S.meta }}">{{ e.period }}</span>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <p style="{{ S.entryTitle }}">{{ e.role }} <span style="color:var(--muted);">·</span> <span style="font-style:italic;">{{ e.org }}</span></p>
+            <p style="{{ S.desc }}">{{ e.desc }}</p>
+            <p style="margin:3px 0 0; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.06em; color:var(--accentSoft);">{{ e.stack }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section id="projects" style="{{ S.sec }}">
+      <div data-reveal style="display:flex; align-items:center; gap:14px; margin-bottom:12px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);">
+        <span style="color:var(--accent);">02</span><span>{{ T.lProj }}</span>
+        <span style="flex:1; height:1px; background:var(--line);"></span>
+      </div>
+      <sc-for list="{{ T.proj }}" as="p" hint-placeholder-count="4">
+        <a data-reveal href="#projects" style="{{ S.row }}">
+          <span style="{{ S.meta }}">{{ p.year }}</span>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <p style="{{ S.entryTitleRow }}">
+              <span style="border-bottom:1px solid var(--line);">{{ p.name }}</span>
+              <span style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--accent);">↗</span>
+            </p>
+            <p style="{{ S.desc }}">{{ p.desc }}</p>
+            <p style="margin:3px 0 0; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.06em; color:var(--accentSoft);">{{ p.stack }}</p>
+          </div>
+        </a>
+      </sc-for>
+    </section>
+
+    <section id="writing" style="{{ S.sec }}">
+      <div data-reveal style="display:flex; align-items:center; gap:14px; margin-bottom:12px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);">
+        <span style="color:var(--accent);">03</span><span>{{ T.lWriting }}</span>
+        <span style="flex:1; height:1px; background:var(--line);"></span>
+      </div>
+      <sc-for list="{{ T.posts }}" as="w" hint-placeholder-count="3">
+        <a data-reveal href="#writing" style="{{ S.rowTight }}">
+          <span style="{{ S.metaFlat }}">{{ w.date }}</span>
+          <span style="{{ S.postTitle }}">{{ w.title }}</span>
+        </a>
+      </sc-for>
+      <p data-reveal style="margin:20px 0 0; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--muted);"><a href="#writing" style="border-bottom:1px solid var(--line);">{{ T.allPosts }}</a></p>
+    </section>
+
+    <section id="shelf" style="{{ S.sec }}">
+      <div data-reveal style="display:flex; align-items:center; gap:14px; margin-bottom:14px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);">
+        <span style="color:var(--accent);">04</span><span>{{ T.lBooks }}</span>
+        <span style="flex:1; height:1px; background:var(--line);"></span>
+      </div>
+      <p data-reveal style="{{ S.booksNote }}">{{ T.booksNote }}</p>
+      <sc-for list="{{ T.books }}" as="b" hint-placeholder-count="3">
+        <div data-reveal style="{{ S.rowBooks }}">
+          <span style="{{ S.metaStatus }}">{{ b.status }}</span>
+          <p style="{{ S.bookTitle }}">{{ b.title }} <span style="color:var(--muted); font-style:italic;">{{ b.author }}</span></p>
+        </div>
+      </sc-for>
+    </section>
+
+    <section id="contact" style="{{ S.contactSec }}">
+      <div data-reveal style="display:flex; align-items:center; gap:14px; margin-bottom:22px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);">
+        <span style="color:var(--accent);">05</span><span>{{ T.lContact }}</span>
+        <span style="flex:1; height:1px; background:var(--line);"></span>
+      </div>
+      <p data-reveal style="{{ S.contactLine }}">{{ T.contactLine }}</p>
+      <div data-reveal style="display:flex; flex-wrap:wrap; gap:10px; font-family:'JetBrains Mono', monospace; font-size:12px;">
+        <a href="#contact" style="{{ S.btnA }}" style-hover="background:var(--accent); color:var(--bg)">{{ T.email }}</a>
+        <a href="#contact" style="{{ S.btnB }}" style-hover="border-color:var(--fg); color:var(--fg)">LinkedIn</a>
+        <a href="#contact" style="{{ S.btnB }}" style-hover="border-color:var(--fg); color:var(--fg)">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top:1px solid var(--line);">
+    <div style="{{ S.footRow }}">
+      <span>{{ T.footer }}</span>
+      <a href="#top">{{ T.toTop }}</a>
+    </div>
+  </footer>
+
+  <div onClick="{{ closeMenu }}" style="{{ S.backdrop }}"></div>
+  <aside aria-hidden="{{ menuHidden }}" inert="{{ menuHidden }}" style="{{ S.drawer }}">
+    <div style="{{ S.drawerHead }}">
+      <span>{{ T.mMenu }}</span>
+      <button onClick="{{ closeMenu }}" aria-label="Close" style="{{ S.drawerClose }}" style-hover="border-color:var(--accent); color:var(--accent)">✕</button>
+    </div>
+    <a href="#work" onClick="{{ closeMenu }}" style="{{ S.drawerLink }}">{{ T.lExp }}</a>
+    <a href="#projects" onClick="{{ closeMenu }}" style="{{ S.drawerLink }}">{{ T.lProj }}</a>
+    <a href="#writing" onClick="{{ closeMenu }}" style="{{ S.drawerLink }}">{{ T.lWriting }}</a>
+    <a href="#shelf" onClick="{{ closeMenu }}" style="{{ S.drawerLink }}">{{ T.lBooks }}</a>
+    <a href="#contact" onClick="{{ closeMenu }}" style="{{ S.drawerLink }}">{{ T.lContact }}</a>
+    <button onClick="{{ toggleLang }}" style="{{ S.drawerRow }}">
+      <span>{{ T.mLang }}</span>
+      <span style="{{ S.drawerVal }}">{{ T.langName }}</span>
+    </button>
+    <button onClick="{{ toggleTheme }}" style="{{ S.drawerRow }}">
+      <span>{{ T.mTheme }}</span>
+      <span style="{{ S.drawerVal }}">{{ themeName }}</span>
+    </button>
+    <div style="{{ S.drawerFoot }}">{{ T.footer }}</div>
+  </aside>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;preview&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto' | 'mobile' | 'desktop'&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;mobile&quot;,&quot;desktop&quot;],&quot;section&quot;:&quot;Layout&quot;},&quot;texture&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dots&quot;,&quot;tsType&quot;:&quot;'none' | 'grain' | 'grid' | 'dots' | 'hatch' | 'grain + grid'&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;grain&quot;,&quot;grid&quot;,&quot;dots&quot;,&quot;hatch&quot;,&quot;grain + grid&quot;],&quot;section&quot;:&quot;Background&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;orange&quot;,&quot;tsType&quot;:&quot;'orange' | 'amber' | 'rust' | 'blue'&quot;,&quot;options&quot;:[&quot;orange&quot;,&quot;amber&quot;,&quot;rust&quot;,&quot;blue&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;forceTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'user' | 'dark' | 'light'&quot;,&quot;options&quot;:[&quot;user&quot;,&quot;dark&quot;,&quot;light&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+const THEMES = {
+  dark: {
+    '--bg': 'oklch(0.185 0.019 252)',
+    '--bgFade': 'oklch(0.185 0.019 252 / 0.84)',
+    '--fg': 'oklch(0.915 0.003 250)',
+    '--muted': 'oklch(0.705 0.006 250)',
+    '--line': 'oklch(0.315 0.012 250)',
+    '--accentSoft': 'oklch(0.63 0.072 58)'
+  },
+  light: {
+    '--bg': 'oklch(0.918 0.004 250)',
+    '--bgFade': 'oklch(0.918 0.004 250 / 0.84)',
+    '--fg': 'oklch(0.335 0.062 254)',
+    '--muted': 'oklch(0.505 0.042 254)',
+    '--line': 'oklch(0.825 0.008 250)',
+    '--accentSoft': 'oklch(0.555 0.09 52)'
+  }
+};
+
+const NOISE = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(#n)'/></svg>");
+
+function texture(name, theme) {
+  const base = { position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 30 };
+  const dark = theme === 'dark';
+  if (name === 'grain') return Object.assign(base, {
+    backgroundImage: 'url("' + NOISE + '")',
+    backgroundSize: '180px 180px',
+    opacity: dark ? 0.12 : 0.1,
+    mixBlendMode: dark ? 'normal' : 'multiply'
+  });
+  if (name === 'grid') return Object.assign(base, {
+    backgroundImage: 'linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px)',
+    backgroundSize: '72px 72px',
+    opacity: dark ? 0.5 : 0.6
+  });
+  if (name === 'dots') return Object.assign(base, {
+    backgroundImage: 'radial-gradient(var(--line) 1px, transparent 1px)',
+    backgroundSize: '20px 20px',
+    opacity: dark ? 0.65 : 0.7
+  });
+  if (name === 'hatch') return Object.assign(base, {
+    backgroundImage: 'repeating-linear-gradient(48deg, var(--line) 0 1px, transparent 1px 9px)',
+    opacity: dark ? 0.35 : 0.4
+  });
+  if (name === 'grain + grid') return Object.assign(base, {
+    backgroundImage: 'url("' + NOISE + '"), linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px)',
+    backgroundSize: '180px 180px, 72px 72px, 72px 72px',
+    opacity: dark ? 0.16 : 0.2
+  });
+  return Object.assign(base, { display: 'none' });
+}
+
+const MONO = "'JetBrains Mono', monospace";
+
+function styles(n, phoneCap, open) {
+  const pad = n ? 22 : 40;
+  const col = n ? (phoneCap ? 400 : '100%') : 760;
+  const shell = { maxWidth: col, margin: '0 auto' };
+  const row = (padY, extra) => Object.assign({
+    display: 'grid',
+    gridTemplateColumns: n ? '1fr' : '112px 1fr',
+    gap: n ? 7 : 26,
+    padding: padY + 'px 0',
+    borderBottom: '1px solid var(--line)'
+  }, extra || {});
+  const btn = (border, color) => ({
+    border: '1px solid ' + border,
+    color: color,
+    padding: n ? '13px 16px' : '10px 16px',
+    borderRadius: 3,
+    transition: 'all 160ms ease'
+  });
+  return {
+    headRow: Object.assign({}, shell, {
+      padding: (n ? 12 : 16) + 'px ' + pad + 'px',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      gap: n ? 12 : 24, fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em'
+    }),
+    nav: { display: 'flex', alignItems: 'center', gap: n ? 8 : 18, color: 'var(--muted)' },
+    navLinks: { display: n ? 'none' : 'flex', alignItems: 'center', gap: 18 },
+    hamburger: {
+      display: n ? 'inline-flex' : 'none', flexDirection: 'column', gap: 4,
+      alignItems: 'center', justifyContent: 'center', width: 44, height: 44, padding: 0,
+      background: 'transparent', border: '1px solid var(--line)', borderRadius: 3,
+      cursor: 'pointer', transition: 'all 160ms ease'
+    },
+    bar: { width: 16, height: 1, background: 'var(--muted)' },
+    backdrop: {
+      position: 'fixed', inset: 0, background: 'oklch(0.12 0.02 252 / 0.5)',
+      backdropFilter: 'blur(2px)', zIndex: 38, display: n ? 'block' : 'none',
+      opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none', transition: 'opacity 240ms ease'
+    },
+    drawer: {
+      position: 'fixed', top: 0, right: 0, bottom: 0, width: '82%', maxWidth: 320,
+      background: 'var(--bg)', borderLeft: '1px solid var(--line)', zIndex: 39,
+      display: n ? 'flex' : 'none', flexDirection: 'column',
+      padding: '18px 22px 30px', transform: open ? 'translateX(0)' : 'translateX(103%)',
+      visibility: open ? 'visible' : 'hidden',
+      transition: open
+        ? 'transform 300ms cubic-bezier(.22,.61,.36,1), visibility 0s'
+        : 'transform 300ms cubic-bezier(.22,.61,.36,1), visibility 0s linear 300ms',
+      boxShadow: open ? '-24px 0 70px oklch(0 0 0 / 0.32)' : 'none'
+    },
+    drawerHead: {
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      paddingBottom: 14, marginBottom: 10, borderBottom: '1px solid var(--line)',
+      fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--muted)'
+    },
+    drawerClose: {
+      width: 44, height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      background: 'transparent', border: '1px solid var(--line)', borderRadius: 3,
+      color: 'var(--muted)', cursor: 'pointer', font: 'inherit', fontSize: 15
+    },
+    drawerLink: { display: 'flex', alignItems: 'center', minHeight: 50, fontSize: 21, borderBottom: '1px solid var(--line)' },
+    drawerRow: {
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+      minHeight: 52, width: '100%', padding: 0, background: 'transparent', border: 'none',
+      borderBottom: '1px solid var(--line)', color: 'var(--fg)', cursor: 'pointer',
+      fontFamily: 'inherit', fontSize: 17, textAlign: 'left'
+    },
+    drawerVal: { fontFamily: MONO, fontSize: 12, letterSpacing: '0.06em', color: 'var(--accent)' },
+    drawerFoot: { marginTop: 'auto', paddingTop: 20, fontFamily: MONO, fontSize: 11, color: 'var(--muted)' },
+    toggle: {
+      font: 'inherit', letterSpacing: '0.04em', cursor: 'pointer', background: 'transparent',
+      border: '1px solid var(--line)', color: 'var(--muted)',
+      padding: n ? '0 12px' : '4px 8px', minHeight: n ? 44 : 0, minWidth: n ? 44 : 0,
+      display: n ? 'inline-flex' : 'inline', alignItems: 'center', justifyContent: 'center',
+      borderRadius: 3, transition: 'all 160ms ease'
+    },
+    main: Object.assign({}, shell, { padding: '0 ' + pad + 'px 40px' }),
+    intro: { padding: n ? '62px 0 52px' : '110px 0 76px' },
+    h1: {
+      margin: '0 0 ' + (n ? 24 : 30) + 'px', fontWeight: 400,
+      fontSize: n ? 38 : 56, lineHeight: n ? 1.1 : 1.04,
+      letterSpacing: '-0.02em', textWrap: 'balance'
+    },
+    lead: { margin: 0, maxWidth: '54ch', fontSize: n ? 18 : 20, lineHeight: n ? 1.62 : 1.58, textWrap: 'pretty' },
+    body: { margin: 0, maxWidth: '58ch', fontSize: n ? 16 : 17, lineHeight: 1.74, color: 'var(--muted)', textWrap: 'pretty' },
+    sec: { padding: n ? '12px 0 52px' : '16px 0 72px', scrollMarginTop: n ? 62 : 70 },
+    contactSec: { padding: n ? '12px 0 34px' : '26px 0 40px', scrollMarginTop: n ? 62 : 70 },
+    row: row(n ? 20 : 22),
+    rowTight: row(n ? 14 : 16, { alignItems: n ? 'start' : 'baseline' }),
+    rowBooks: row(n ? 13 : 14, { alignItems: n ? 'start' : 'baseline' }),
+    meta: {
+      fontFamily: MONO, fontSize: n ? 11 : 12, fontVariantNumeric: 'tabular-nums',
+      color: 'var(--muted)', paddingTop: n ? 0 : 7, letterSpacing: n ? '0.06em' : 'normal'
+    },
+    metaFlat: {
+      fontFamily: MONO, fontSize: n ? 11 : 12, fontVariantNumeric: 'tabular-nums',
+      color: 'var(--muted)', letterSpacing: n ? '0.06em' : 'normal'
+    },
+    metaStatus: {
+      fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em',
+      textTransform: 'uppercase', color: 'var(--accentSoft)'
+    },
+    entryTitle: { margin: 0, fontSize: n ? 19 : 21, lineHeight: 1.3 },
+    entryTitleRow: { margin: 0, fontSize: n ? 19 : 21, lineHeight: 1.3, display: 'flex', alignItems: 'baseline', gap: 9 },
+    desc: { margin: 0, maxWidth: '54ch', fontSize: n ? 15.5 : 16, lineHeight: 1.66, color: 'var(--muted)', textWrap: 'pretty' },
+    postTitle: { fontSize: n ? 17.5 : 19, lineHeight: 1.4 },
+    bookTitle: { margin: 0, fontSize: n ? 17 : 18, lineHeight: 1.4 },
+    booksNote: { margin: '0 0 8px', maxWidth: '56ch', fontSize: n ? 15.5 : 16, fontStyle: 'italic', lineHeight: 1.66, color: 'var(--muted)', textWrap: 'pretty' },
+    contactLine: { margin: '0 0 24px', maxWidth: '40ch', fontSize: n ? 25 : 32, lineHeight: n ? 1.32 : 1.28, letterSpacing: '-0.015em', textWrap: 'pretty' },
+    btnA: btn('var(--accent)', 'var(--accent)'),
+    btnB: btn('var(--line)', 'var(--muted)'),
+    footRow: Object.assign({}, shell, {
+      padding: '22px ' + pad + 'px 40px', display: 'flex',
+      flexDirection: n ? 'column' : 'row', justifyContent: 'space-between',
+      gap: n ? 10 : 20, fontFamily: MONO, fontSize: 11, color: 'var(--muted)'
+    })
+  };
+}
+
+const EN = {
+  role: 'Software Engineer',
+  greeting: 'Hey, I\u2019m Alvaro.',
+  blurb: 'I build the parts of software you never see \u2014 APIs, data models, and the systems that have to stay upright at 3am. Currently at [Company], based in [City].',
+  lExp: 'Experience', lProj: 'Projects', lWriting: 'Writing', lBooks: 'Bookshelf', lContact: 'Contact',
+  aboutP1: 'I started out shipping features end to end and slowly drifted toward the back of the house: queues, schemas, migrations, the slow work of making a service boring. I still write frontend when a project needs it \u2014 I just care more about what happens after the request leaves the browser.',
+  aboutP2: 'Away from the keyboard I am usually outside, watching a match, or halfway through a book I will tell you about unprompted.',
+  exp: [
+    { period: '2023 — now', role: 'Backend Engineer', org: '[Company]', desc: 'Own the services behind [product area]. Cut p99 latency and made deploys something nobody thinks about.', stack: 'Go · PostgreSQL · Kafka · AWS' },
+    { period: '2021 — 2023', role: 'Full-stack Engineer', org: '[Company]', desc: 'Built features across API and UI for a team of [n]. Led the move off the monolith for [domain].', stack: 'Node · TypeScript · React · Redis' },
+    { period: '2019 — 2021', role: 'Software Engineer', org: '[Company]', desc: 'First engineering job. Learned to read other people\u2019s code, and to write code others could read.', stack: 'Python · Django · MySQL' }
+  ],
+  proj: [
+    { year: '2026', name: '[Project One]', desc: 'A small service that does one thing well. One sentence on what it solves and who uses it.', stack: 'Go · SQLite' },
+    { year: '2025', name: '[Project Two]', desc: 'Weekend build that turned into something people actually run. Name the interesting constraint.', stack: 'Rust · gRPC' },
+    { year: '2024', name: '[Project Three]', desc: 'A tool for a hobby of mine. The kind of thing that only exists because I wanted it.', stack: 'TypeScript · Postgres' }
+  ],
+  posts: [
+    { date: 'Jul 2026', title: 'What I got wrong about database transactions' },
+    { date: 'Apr 2026', title: 'A queue is a promise you make to your future self' },
+    { date: 'Jan 2026', title: 'Notes from six months on call' }
+  ],
+  allPosts: 'All posts →',
+  booksNote: 'What I am reading, and what stuck. Updated more often than my resume.',
+  books: [
+    { title: '[Book title]', author: '[Author]', status: 'Reading' },
+    { title: '[Book title]', author: '[Author]', status: 'Finished' },
+    { title: '[Book title]', author: '[Author]', status: 'Next' }
+  ],
+  contactLine: 'If you are hiring, or you just want to argue about databases, write to me.',
+  email: 'you@email.com', resume: 'Resume (PDF)',
+  footer: '© 2026 Alvaro — built by hand', toTop: 'Back to top ↑',
+  mMenu: 'Menu', mLang: 'Language', mTheme: 'Theme',
+  langName: 'English', mDark: 'Dark', mLight: 'Light'
+};
+
+const PT = {
+  role: 'Engenheiro de Software',
+  greeting: 'Oi, eu sou o Alvaro.',
+  blurb: 'Construo as partes do software que ninguém vê \u2014 APIs, modelos de dados e os sistemas que precisam ficar de pé às 3 da manhã. Hoje na [Empresa], em [Cidade].',
+  lExp: 'Experiência', lProj: 'Projetos', lWriting: 'Textos', lBooks: 'Estante', lContact: 'Contato',
+  aboutP1: 'Comecei entregando features de ponta a ponta e fui aos poucos indo para os fundos da casa: filas, schemas, migrações, o trabalho lento de deixar um serviço sem graça. Ainda escrevo frontend quando o projeto pede \u2014 só me interessa mais o que acontece depois que a requisição sai do navegador.',
+  aboutP2: 'Longe do teclado costumo estar na rua, vendo um jogo, ou no meio de um livro sobre o qual vou falar sem ninguém pedir.',
+  exp: [
+    { period: '2023 — hoje', role: 'Engenheiro Backend', org: '[Empresa]', desc: 'Responsável pelos serviços por trás de [área do produto]. Reduzi a latência p99 e tornei o deploy algo que ninguém precisa pensar.', stack: 'Go · PostgreSQL · Kafka · AWS' },
+    { period: '2021 — 2023', role: 'Engenheiro Full-stack', org: '[Empresa]', desc: 'Features de API e UI para um time de [n] pessoas. Liderei a saída do monolito para [domínio].', stack: 'Node · TypeScript · React · Redis' },
+    { period: '2019 — 2021', role: 'Desenvolvedor de Software', org: '[Empresa]', desc: 'Primeiro emprego na área. Aprendi a ler o código dos outros e a escrever código que os outros conseguem ler.', stack: 'Python · Django · MySQL' }
+  ],
+  proj: [
+    { year: '2026', name: '[Projeto Um]', desc: 'Um serviço pequeno que faz uma coisa bem feita. Uma frase sobre o que resolve e para quem.', stack: 'Go · SQLite' },
+    { year: '2025', name: '[Projeto Dois]', desc: 'Projeto de fim de semana que virou algo que gente de verdade usa. Diga qual foi a restrição interessante.', stack: 'Rust · gRPC' },
+    { year: '2024', name: '[Projeto Três]', desc: 'Uma ferramenta para um hobby meu. Do tipo que só existe porque eu quis.', stack: 'TypeScript · Postgres' }
+  ],
+  posts: [
+    { date: 'Jul 2026', title: 'O que eu entendia errado sobre transações em banco' },
+    { date: 'Abr 2026', title: 'Uma fila é uma promessa que você faz ao seu eu do futuro' },
+    { date: 'Jan 2026', title: 'Notas de seis meses de plantão' }
+  ],
+  allPosts: 'Todos os textos →',
+  booksNote: 'O que estou lendo e o que ficou. Atualizado com mais frequência que meu currículo.',
+  books: [
+    { title: '[Título do livro]', author: '[Autor]', status: 'Lendo' },
+    { title: '[Título do livro]', author: '[Autor]', status: 'Lido' },
+    { title: '[Título do livro]', author: '[Autor]', status: 'Próximo' }
+  ],
+  contactLine: 'Se você está contratando, ou só quer discutir banco de dados, me escreva.',
+  email: 'voce@email.com', resume: 'Currículo (PDF)',
+  footer: '© 2026 Alvaro — feito à mão', toTop: 'Voltar ao topo ↑',
+  mMenu: 'Menu', mLang: 'Idioma', mTheme: 'Tema',
+  langName: 'Português', mDark: 'Escuro', mLight: 'Claro'
+};
+
+const ACCENTS = {
+  orange: { dark: 'oklch(0.745 0.145 58)', light: 'oklch(0.585 0.155 52)' },
+  amber: { dark: 'oklch(0.80 0.135 78)', light: 'oklch(0.63 0.14 72)' },
+  rust: { dark: 'oklch(0.68 0.155 38)', light: 'oklch(0.55 0.16 34)' },
+  blue: { dark: 'oklch(0.72 0.12 240)', light: 'oklch(0.55 0.14 250)' }
+};
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    let theme = null, lang = null;
+    try {
+      theme = localStorage.getItem('av-theme-v2');
+      lang = localStorage.getItem('av-lang-v2');
+    } catch (e) {}
+    this.state = { theme: theme || 'dark', lang: lang || 'en', w: window.innerWidth, menu: false };
+  }
+
+  componentDidMount() {
+    this._onResize = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        if (window.innerWidth !== this.state.w) this.setState({ w: window.innerWidth });
+      });
+    };
+    window.addEventListener('resize', this._onResize);
+    this.reveal();
+    this.syncRoot();
+  }
+
+  componentDidUpdate() { this.reveal(); this.syncRoot(); this.lockScroll(); }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  lockScroll() {
+    document.body.style.overflow = this.state.menu ? 'hidden' : '';
+  }
+
+  syncRoot() {
+    if (!this._vars) return;
+    const r = document.documentElement;
+    Object.keys(this._vars).forEach(k => r.style.setProperty(k, this._vars[k]));
+  }
+
+  reveal() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nodes = document.querySelectorAll('[data-reveal]:not([data-revealed])');
+    if (!nodes.length) return;
+    if (!this._io) {
+      this._io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'none';
+          this._io.unobserve(en.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    }
+    nodes.forEach((n, i) => {
+      n.setAttribute('data-revealed', '');
+      n.style.opacity = '0';
+      n.style.transform = 'translateY(10px)';
+      n.style.transition = 'opacity 620ms cubic-bezier(.22,.61,.36,1) ' + Math.min(i * 45, 260) + 'ms, transform 620ms cubic-bezier(.22,.61,.36,1) ' + Math.min(i * 45, 260) + 'ms';
+      this._io.observe(n);
+    });
+  }
+
+  set(k, v) {
+    try { localStorage.setItem(k === 'theme' ? 'av-theme-v2' : 'av-lang-v2', v); } catch (e) {}
+    this.setState({ [k]: v });
+  }
+
+  renderVals() {
+    const theme = this.props.forceTheme && this.props.forceTheme !== 'user' ? this.props.forceTheme : this.state.theme;
+    const accentName = this.props.accent || 'orange';
+    const accent = (ACCENTS[accentName] || ACCENTS.orange)[theme === 'dark' ? 'dark' : 'light'];
+    const vars = Object.assign({}, THEMES[theme === 'dark' ? 'dark' : 'light'], { '--accent': accent });
+    const lang = this.state.lang;
+    this._vars = vars;
+
+    const view = this.props.preview || 'auto';
+    const forced = view === 'mobile';
+    const narrow = forced || (view !== 'desktop' && this.state.w < 700);
+    const T = lang === 'pt' ? PT : EN;
+    const closeMenu = () => this.setState({ menu: false });
+
+    return {
+      T: T,
+      vars,
+      S: styles(narrow, forced && this.state.w >= 700, this.state.menu),
+      textureStyle: texture(this.props.texture || 'dots', theme),
+      themeIcon: theme === 'dark' ? '☀' : '☾',
+      langLabel: lang === 'pt' ? 'EN' : 'PT',
+      themeName: theme === 'dark' ? T.mDark : T.mLight,
+      menuHidden: this.state.menu ? undefined : 'true',
+      openMenu: () => this.setState({ menu: true }),
+      closeMenu: closeMenu,
+      toggleTheme: () => this.set('theme', theme === 'dark' ? 'light' : 'dark'),
+      toggleLang: () => this.set('lang', lang === 'pt' ? 'en' : 'pt')
+    };
+  }
+}
+</script>
+</body>
+</html>
