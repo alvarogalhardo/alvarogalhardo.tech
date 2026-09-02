@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
-    "audit": "lighthouse http://localhost:4321 --only-categories=performance,accessibility,best-practices,seo --view"
+    "audit": "lighthouse http://localhost:4321 --only-categories=performance,accessibility,best-practices,seo --view",
+    "check:seo": "python scripts/check-seo.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.0",

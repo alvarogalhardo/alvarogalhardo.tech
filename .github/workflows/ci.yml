@@ -12,3 +12,5 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: auditoria de seo sobre o build
+        run: python scripts/check-seo.py

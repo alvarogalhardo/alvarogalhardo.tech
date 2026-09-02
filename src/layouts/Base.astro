@@ -11,9 +11,15 @@ interface Props {
   title: string;
   description: string;
   ogSlug?: string;
+  /**
+   * Se esta rota tem equivalente no outro idioma. Páginas de post existem em
+   * um idioma só, e anunciar um hreflang para uma URL inexistente faz o Google
+   * tratar o par inteiro como erro — pior do que não declarar nada.
+   */
+  translated?: boolean;
 }
 
-const { title, description, ogSlug = 'home' } = Astro.props;
+const { title, description, ogSlug = 'home', translated = true } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const canonical = new URL(withTrailingSlash(Astro.url.pathname), Astro.site);
 const enHref = new URL(alternatePath(Astro.url, 'en'), Astro.site);
@@ -44,9 +50,15 @@ const person = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={enHref} />
-    <link rel="alternate" hreflang="pt" href={ptHref} />
-    <link rel="alternate" hreflang="x-default" href={enHref} />
+    {
+      translated && (
+        <>
+          <link rel="alternate" hreflang="en" href={enHref} />
+          <link rel="alternate" hreflang="pt" href={ptHref} />
+          <link rel="alternate" hreflang="x-default" href={enHref} />
+        </>
+      )
+    }
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
