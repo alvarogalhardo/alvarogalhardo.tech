@@ -1,0 +1,22 @@
+---
+/**
+ * Textura de pontos. O protótipo trazia seis variantes (grain, grid, dots,
+ * hatch, grain+grid, none) usadas para exploração; o handoff escolhe dots.
+ * Não usa mix-blend-mode — aquilo pertencia à variante grain e escureceria
+ * o texto, não só o fundo.
+ */
+---
+
+<div class="texture" aria-hidden="true"></div>
+
+<style>
+  .texture {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: var(--texture-opacity);
+  }
+</style>
