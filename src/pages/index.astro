@@ -1,7 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import WritingSection from '../components/WritingSection.astro';
+import ShelfSection from '../components/ShelfSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { getCollection } from 'astro:content';
+import { toProjectCards, toPostCards } from '../lib/content';
+
+const projects = toProjectCards(await getCollection('projects'), 'en');
+const posts = toPostCards(await getCollection('writing'), 'en', 3);
 ---
 
 <Base title="Alvaro Galhardo — Backend Engineer" description="Lorem ipsum dolor sit amet.">
-  <main class="wrap" id="top"><h1>Lorem ipsum</h1></main>
+  <main class="wrap" id="top">
+    <Hero />
+    <ExperienceSection />
+    <ProjectsSection projects={projects} />
+    <WritingSection posts={posts} />
+    <ShelfSection />
+    <ContactSection />
+  </main>
 </Base>

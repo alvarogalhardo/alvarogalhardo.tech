@@ -1,0 +1,121 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const copy = {
+  en: {
+    greeting: 'Hey, I\u2019m Alvaro.',
+    lead: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit \u2014 APIs, data models, and the systems that have to stay upright at 3am.',
+    p1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    p2: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+  },
+  pt: {
+    greeting: 'Oi, eu sou o Alvaro.',
+    lead: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit \u2014 APIs, modelos de dados e os sistemas que precisam ficar de p\u00e9 \u00e0s 3 da manh\u00e3.',
+    p1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.',
+    p2: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+  }
+}[lang];
+---
+
+<section class="hero">
+  <p class="mono role" data-role-label>{t('hero.role')}</p>
+  <h1>{copy.greeting}</h1>
+  <div class="prose">
+    <p class="lead">{copy.lead}</p>
+    <p class="about">{copy.p1}</p>
+    <p class="about">{copy.p2}</p>
+  </div>
+  <div class="cta mono">
+    <a href="mailto:alvaromgfernandes@gmail.com" class="btn primary">{t('hero.cta.email')}</a>
+    <a href="/cv.pdf" class="btn">{t('hero.cta.resume')}</a>
+    <a href="https://github.com/alvarogalhardo" class="btn" rel="me noopener">GitHub</a>
+  </div>
+</section>
+
+<style>
+  /* Sem data-reveal aqui de proposito: o h1 e o elemento de LCP e nascer
+     em opacity 0 atrasa a metrica sem ganho, ja que o hero esta sempre
+     visivel no carregamento. */
+  .hero {
+    padding-block: 110px 76px;
+  }
+  .role {
+    margin-bottom: 22px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin-bottom: 30px;
+    font-size: clamp(2.375rem, 6vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .lead {
+    max-width: 54ch;
+    font-size: 20px;
+    line-height: 1.58;
+    text-wrap: pretty;
+  }
+  .about {
+    max-width: 58ch;
+    font-size: 17px;
+    line-height: 1.74;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 34px;
+    font-size: 12px;
+  }
+  .btn {
+    border: 1px solid var(--lineControl);
+    color: var(--muted);
+    padding: 10px 16px;
+    border-radius: 3px;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+  .btn:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+  .primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .primary:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 700px) {
+    .hero {
+      padding-block: 62px 52px;
+    }
+    h1 {
+      line-height: 1.1;
+    }
+    .lead {
+      font-size: 18px;
+    }
+    .about {
+      font-size: 16px;
+    }
+    .btn {
+      padding: 13px 16px;
+    }
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import MetaRow from './MetaRow.astro';
+import { books } from '../data/books';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const note = {
+  en: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
+  pt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+}[lang];
+---
+
+<section id="shelf" class="section">
+  <SectionHeading num="04" label={t('nav.books')} />
+  <p class="note" data-reveal>{note}</p>
+  <div id="shelf-list">
+    {
+      books.map((b) => (
+        <MetaRow meta={b.status[lang]} align="baseline" pad="sm">
+          <p class="title">
+            {b.title} <em class="dim">{b.author}</em>
+          </p>
+        </MetaRow>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: 16px 72px;
+  }
+  .note {
+    margin-bottom: 14px;
+    max-width: 56ch;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.66;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .title {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .dim {
+    color: var(--muted);
+  }
+  /* A coluna de status e a unica em caixa alta e accentSoft. Como .meta
+     pertence ao MetaRow, o estilo precisa de :global para atravessar o escopo. */
+  #shelf-list :global(.meta) {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    color: var(--accentSoft);
+  }
+  @media (max-width: 700px) {
+    .section {
+      padding-block: 12px 52px;
+    }
+    .title {
+      font-size: 17px;
+    }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import MetaRow from './MetaRow.astro';
+import { experience } from '../data/experience';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="work" class="section">
+  <SectionHeading num="01" label={t('nav.experience')} />
+  <div id="work-list">
+    {
+      experience.map((e) => (
+        <MetaRow meta={e.period}>
+          <p class="title">
+            {e.role} <span class="dim" aria-hidden="true">&middot;</span> <em>{e.org}</em>
+          </p>
+          <p class="desc">{e.desc[lang]}</p>
+          <p class="mono stack">{e.stack}</p>
+        </MetaRow>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: 16px 72px;
+  }
+  .title {
+    font-size: 21px;
+    line-height: 1.25;
+  }
+  .dim {
+    color: var(--muted);
+  }
+  .desc {
+    max-width: 54ch;
+    font-size: 16px;
+    line-height: 1.66;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .stack {
+    margin-top: 3px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--accentSoft);
+  }
+  @media (max-width: 700px) {
+    .section {
+      padding-block: 12px 52px;
+    }
+    .title {
+      font-size: 19px;
+    }
+    .desc {
+      font-size: 15.5px;
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import MetaRow from './MetaRow.astro';
+import type { PostCardData } from '../lib/content';
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+
+interface Props {
+  posts: PostCardData[];
+}
+const { posts } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
+  month: 'short',
+  year: 'numeric'
+});
+---
+
+<section id="writing" class="section">
+  <SectionHeading num="03" label={t('nav.writing')} />
+  <div id="writing-list">
+    {
+      posts.map((p) => (
+        <MetaRow
+          meta={fmt.format(p.date)}
+          href={localizePath(`/writing/${p.slug}`, lang)}
+          align="baseline"
+          pad="md"
+        >
+          <span class="title">{p.title}</span>
+        </MetaRow>
+      ))
+    }
+  </div>
+  <p class="mono all">
+    <a href={localizePath('/writing', lang)}>{t('writing.all')} &#8594;</a>
+  </p>
+</section>
+
+<style>
+  .section {
+    padding-block: 16px 72px;
+  }
+  .title {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+  .all {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .all a {
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 700px) {
+    .section {
+      padding-block: 12px 52px;
+    }
+    .title {
+      font-size: 17.5px;
+    }
+  }
+</style>

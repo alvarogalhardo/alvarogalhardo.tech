@@ -1,0 +1,73 @@
+---
+interface Props {
+  meta: string;
+  href?: string;
+  align?: 'top' | 'baseline';
+  pad?: 'lg' | 'md' | 'sm';
+}
+const { meta, href, align = 'top', pad = 'lg' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag class:list={['row', `align-${align}`, `pad-${pad}`]} href={href} data-reveal>
+  <span class="mono meta">{meta}</span>
+  <div class="body"><slot /></div>
+</Tag>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: var(--meta-col) 1fr;
+    gap: var(--gap-row);
+    border-bottom: 1px solid var(--line);
+  }
+  .align-top {
+    align-items: start;
+  }
+  .align-baseline {
+    align-items: baseline;
+  }
+  .pad-lg {
+    padding-block: 22px;
+  }
+  .pad-md {
+    padding-block: 16px;
+  }
+  .pad-sm {
+    padding-block: 14px;
+  }
+  .meta {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .align-top .meta {
+    padding-top: 7px;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+    .align-top .meta {
+      padding-top: 0;
+    }
+    .meta {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+    .pad-lg {
+      padding-block: 20px;
+    }
+    .pad-md {
+      padding-block: 14px;
+    }
+    .pad-sm {
+      padding-block: 13px;
+    }
+  }
+</style>
