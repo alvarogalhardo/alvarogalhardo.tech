@@ -51,6 +51,52 @@ describe('Texture.astro', () => {
   it('a opacidade vem do token, que muda por tema', () => {
     expect(texture).toContain('var(--texture-opacity)');
   });
+
+  it('fica atrás do conteúdo, não à frente', () => {
+    // z-index positivo poe os pontos por cima do texto e do header.
+    const z = textureCss.match(/z-index:\s*(-?\d+)/)?.[1];
+    expect(z).toBeDefined();
+    expect(Number(z)).toBeLessThan(0);
+  });
+});
+
+describe('camada de fundo', () => {
+  const css = readFileSync('src/styles/global.css', 'utf8');
+  const bloco = (sel: string) => {
+    const i = css.indexOf(sel);
+    return i < 0 ? '' : css.slice(i, css.indexOf('}', i));
+  };
+
+  it('o fundo fica no html', () => {
+    expect(bloco('html {')).toContain('background: var(--bg)');
+  });
+
+  it('o body não repinta o fundo — esconderia a textura', () => {
+    // Um <body> com fundo opaco pinta acima de filhos com z-index negativo.
+    expect(bloco('body {')).not.toContain('background');
+  });
+
+  it('o html não transiciona o fundo', () => {
+    // O fundo do elemento raiz propaga para o canvas do viewport e a transicao
+    // nao acompanha: o valor computado trava na cor antiga e a troca de tema
+    // deixa texto claro sobre fundo claro. Verificado no browser.
+    const h = bloco('html {');
+    const trans = h.match(/transition:([^;]*)/)?.[1] ?? '';
+    expect(trans).not.toContain('background');
+  });
+
+  it('o html ainda transiciona a cor do texto', () => {
+    expect(bloco('html {')).toContain('transition: color');
+  });
+
+  it('o body não cria contexto de empilhamento', () => {
+    // opacity/transform/filter/isolation no body prendem o z-index -1 dentro
+    // dele, e a textura desaparece atras do proprio fundo.
+    const b = bloco('body {');
+    for (const prop of ['opacity:', 'transform:', 'filter:', 'isolation:']) {
+      expect(b, `body nao pode declarar ${prop}`).not.toContain(prop);
+    }
+  });
 });
 
 describe('Reveal — rede de segurança', () => {

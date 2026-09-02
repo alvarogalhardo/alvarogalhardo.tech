@@ -44,6 +44,24 @@ de LCP e é pintado imediatamente. O CLS zero vem das fontes auto-hospedadas via
 - Reveal: com o observer inoperante, a rede de segurança restaura os 18
   elementos — nenhum conteúdo fica invisível.
 - Sem rolagem horizontal.
+- Textura: fica atrás do conteúdo (`z-index: -1`), `elementFromPoint` sobre o
+  `h1` retorna o próprio `h1`, e continua visível nos dois temas.
+- Troca de tema: fundo e texto acompanham em todas as trocas, nos dois sentidos.
+
+## Correções feitas durante a auditoria
+
+**Textura na frente do conteúdo.** O handoff especifica `z-index: 30`, que a
+coloca acima do header (20) e de todo o texto — pontos de 1px sobre a tipografia
+prejudicam a leitura. Foi para `z-index: -1`, o que exigiu mover o `background`
+do `body` para o `html`: um `<body>` com fundo opaco pinta acima de filhos com
+z-index negativo e a textura sumiria.
+
+**Fundo travado na troca de tema.** Ao remover o `background` duplicado do
+`body`, apareceu um bug que ele mascarava: o `<html>` transicionava `background`,
+e o fundo do elemento raiz propaga para o canvas do viewport sem que a transição
+acompanhe. O valor computado ficava preso na cor antiga — clicar em tema claro
+deixava texto escuro sobre fundo escuro. A transição de `background` foi
+removida; a de `color` funciona e ficou. A troca de fundo é instantânea.
 
 ## Pendências
 

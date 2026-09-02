@@ -16,7 +16,12 @@ html {
   background: var(--bg);
   color: var(--fg);
   scroll-behavior: smooth;
-  transition: background 220ms ease, color 220ms ease;
+  /* Sem transicao no background. O fundo do elemento raiz propaga para o
+     canvas do viewport, e a transicao nao acompanha essa propagacao: o valor
+     computado trava na cor antiga e o tema nunca chega ao fundo. Ficava
+     mascarado enquanto o <body> repintava o fundo por cima. A troca de fundo
+     e instantanea; o texto ainda faz fade, que basta para nao piscar. */
+  transition: color 220ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -31,9 +36,11 @@ html {
   }
 }
 
+/* O fundo vive só no <html>: o overscroll e a calha da barra de rolagem
+   acompanham o tema, e a textura em z-index -1 continua visível. Repetir o
+   fundo aqui a esconderia. */
 body {
   min-height: 100vh;
-  background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 17px;

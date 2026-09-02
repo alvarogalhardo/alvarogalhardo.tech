@@ -2,8 +2,18 @@
 /**
  * Textura de pontos. O protótipo trazia seis variantes (grain, grid, dots,
  * hatch, grain+grid, none) usadas para exploração; o handoff escolhe dots.
- * Não usa mix-blend-mode — aquilo pertencia à variante grain e escureceria
- * o texto, não só o fundo.
+ *
+ * Fica ATRÁS do conteúdo, não à frente. O handoff especifica z-index: 30, que
+ * a coloca acima do header (20) e de todo o texto — pontos de 1px por cima da
+ * tipografia prejudicam a leitura sem ganho visual. Aqui ela é fundo de
+ * verdade.
+ *
+ * Para z-index: -1 funcionar, duas condições: o <body> não pode criar contexto
+ * de empilhamento (nada de opacity, transform, filter ou isolation nele), e o
+ * background precisa ficar só no <html> — um <body> com fundo opaco pintaria
+ * por cima e a textura sumiria.
+ *
+ * Sem mix-blend-mode: aquilo pertencia à variante grain e escureceria o texto.
  */
 ---
 
@@ -13,7 +23,7 @@
   .texture {
     position: fixed;
     inset: 0;
-    z-index: 30;
+    z-index: -1;
     pointer-events: none;
     background-image: radial-gradient(var(--line) 1px, transparent 1px);
     background-size: 20px 20px;
