@@ -10,9 +10,10 @@ import { getLangFromUrl, alternatePath, withTrailingSlash } from '../i18n/utils'
 interface Props {
   title: string;
   description: string;
+  ogSlug?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogSlug = 'home' } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const canonical = new URL(withTrailingSlash(Astro.url.pathname), Astro.site);
 const enHref = new URL(alternatePath(Astro.url, 'en'), Astro.site);

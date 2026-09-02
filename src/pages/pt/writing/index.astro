@@ -1,0 +1,54 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import MetaRow from '../../../components/MetaRow.astro';
+import { getCollection } from 'astro:content';
+import { toPostCards } from '../../../lib/content';
+import { useTranslations, localizePath } from '../../../i18n/utils';
+
+const t = useTranslations('pt');
+const posts = toPostCards(await getCollection('writing'), 'pt');
+const fmt = new Intl.DateTimeFormat('pt-BR', { month: 'short', year: 'numeric' });
+---
+
+<Base title="Escritos — Alvaro Galhardo" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+  <main class="wrap" id="top">
+    <div class="head">
+      <SectionHeading num="03" label={t('nav.writing')} />
+    </div>
+    {
+      posts.map((p) => (
+        <MetaRow meta={fmt.format(p.date)} href={localizePath(`/writing/${p.slug}`, 'pt')} pad="md">
+          <span class="title">{p.title}</span>
+          <span class="summary">{p.summary}</span>
+        </MetaRow>
+      ))
+    }
+  </main>
+</Base>
+
+<style>
+  .head {
+    padding-top: 80px;
+  }
+  main {
+    padding-bottom: 64px;
+  }
+  .title {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+  .summary {
+    font-size: 15px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  @media (max-width: 700px) {
+    .head {
+      padding-top: 52px;
+    }
+    .title {
+      font-size: 17.5px;
+    }
+  }
+</style>
