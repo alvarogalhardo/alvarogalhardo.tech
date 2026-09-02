@@ -88,4 +88,10 @@ section {
   body {
     font-size: 16px;
   }
+
+  /* Trava de scroll do drawer. Fica aqui, dentro do media query, para que
+     voltar a largura de desktop destrave a pagina sem depender de JS. */
+  body.menu-open {
+    overflow: hidden;
+  }
 }

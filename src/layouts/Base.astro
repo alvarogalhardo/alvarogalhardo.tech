@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ThemeScript from '../components/ThemeScript.astro';
+import Header from '../components/Header.astro';
 import { getLangFromUrl, alternatePath, withTrailingSlash } from '../i18n/utils';
 
 interface Props {
@@ -33,6 +34,7 @@ const ptHref = new URL(alternatePath(Astro.url, 'pt'), Astro.site);
     <slot name="head" />
   </head>
   <body>
+    <Header />
     <slot />
   </body>
 </html>
