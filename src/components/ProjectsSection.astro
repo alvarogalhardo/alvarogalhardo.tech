@@ -2,7 +2,7 @@
 import SectionHeading from './SectionHeading.astro';
 import MetaRow from './MetaRow.astro';
 import type { ProjectCardData } from '../lib/content';
-import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 interface Props {
   projects: ProjectCardData[];
@@ -17,13 +17,10 @@ const t = useTranslations(lang);
   <div id="projects-list">
     {
       projects.map((p) => (
-        <MetaRow
-          meta={String(p.year)}
-          href={p.url ?? localizePath(`/projects/${p.slug}`, lang)}
-        >
+        <MetaRow meta={String(p.year)} href={p.url}>
           <p class="title">
             <span class="u">{p.name}</span>
-            <span class="mono arrow" aria-hidden="true">&#8599;</span>
+            {p.url && <span class="mono arrow" aria-hidden="true">&#8599;</span>}
           </p>
           <p class="desc">{p.summary}</p>
           <p class="mono stack">{p.stack.join(' \u00b7 ')}</p>

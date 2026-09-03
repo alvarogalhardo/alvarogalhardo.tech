@@ -13,7 +13,14 @@ const at = (Comp: unknown, path: string, props: Record<string, unknown> = {}) =>
 const countRows = (html: string) => (html.match(/class="[^"]*\brow\b/g) ?? []).length;
 
 const projects = [
-  { slug: 'lorem-service', name: '[Project One]', year: 2026, summary: 'Ipsum.', stack: ['Go', 'SQLite'] },
+  {
+    slug: 'lorem-service',
+    name: '[Project One]',
+    year: 2026,
+    summary: 'Ipsum.',
+    stack: ['Go', 'SQLite'],
+    url: 'https://example.com/one'
+  },
   { slug: 'outro', name: '[Project Two]', year: 2024, summary: 'Dolor.', stack: ['C#'] }
 ];
 
@@ -43,8 +50,13 @@ describe('ProjectsSection', () => {
   it('mostra a stack separada por ponto médio', async () => {
     expect(await at(ProjectsSection, '/', { projects })).toContain('Go · SQLite');
   });
-  it('prefixa o link do projeto em pt', async () => {
-    expect(await at(ProjectsSection, '/pt', { projects })).toContain('href="/pt/projects/lorem-service/"');
+  it('usa a url externa quando o projeto tem uma', async () => {
+    expect(await at(ProjectsSection, '/', { projects })).toContain('href="https://example.com/one"');
+  });
+  it('projeto sem url não vira link nem mostra a seta', async () => {
+    const html = await at(ProjectsSection, '/', { projects });
+    expect(html).not.toContain('/projects/');
+    expect((html.match(/class="mono arrow"/g) ?? []).length).toBe(1);
   });
   it('esconde a seta decorativa de leitores de tela', async () => {
     const html = await at(ProjectsSection, '/', { projects });

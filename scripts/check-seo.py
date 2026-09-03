@@ -37,6 +37,11 @@ def main():
         title = re.search(r'<title>([^<]*)</title>', html)
         desc = re.search(r'<meta name="description" content="([^"]*)"', html)
         alts = dict(re.findall(r'hreflang="([^"]+)" href="([^"]+)"', html))
+
+        h1s = len(re.findall(r'<h1[\s>]', html))
+        if h1s != 1:
+            erros.append(f'{p}: {h1s} <h1> na pagina (esperado exatamente 1)')
+
         if not canon:
             erros.append(f'{p}: sem canonical')
             continue

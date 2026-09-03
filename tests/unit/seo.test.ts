@@ -14,7 +14,9 @@ describe('Open Graph', () => {
   });
 
   it('usa a imagem do post quando ogSlug é passado', async () => {
-    expect(await render('/', { ogSlug: 'lorem-transactions' })).toContain('/og/lorem-transactions.png');
+    expect(await render('/', { ogSlug: 'en/lorem-transactions' })).toContain(
+      '/og/en/lorem-transactions.png'
+    );
   });
 
   it('declara twitter:card grande', async () => {

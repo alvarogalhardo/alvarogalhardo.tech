@@ -6,14 +6,15 @@ import Footer from '../components/Footer.astro';
 import Texture from '../components/Texture.astro';
 import Reveal from '../components/Reveal.astro';
 import { getLangFromUrl, alternatePath, localizePath, withTrailingSlash } from '../i18n/utils';
+import { ldJson } from '../lib/ld';
 
 interface Props {
   title: string;
   description: string;
   ogSlug?: string;
   /**
-   * Se esta rota tem equivalente no outro idioma. Páginas de post existem em
-   * um idioma só, e anunciar um hreflang para uma URL inexistente faz o Google
+   * Se esta rota tem equivalente no outro idioma. Quando false, o layout emite
+   * só o canonical: anunciar um hreflang para uma URL inexistente faz o Google
    * tratar o par inteiro como erro — pior do que não declarar nada.
    */
   translated?: boolean;
@@ -69,9 +70,12 @@ const person = {
     <meta property="og:locale" content={lang === 'pt' ? 'pt_BR' : 'en_US'} />
     <meta property="og:locale:alternate" content={lang === 'pt' ? 'en_US' : 'pt_BR'} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="alternate" type="application/rss+xml" title="Alvaro Galhardo" href={feedHref} />
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(person)} />
+    <script type="application/ld+json" is:inline set:html={ldJson(person)} />
     <slot name="head" />
   </head>
   <body>

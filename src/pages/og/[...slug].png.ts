@@ -15,18 +15,49 @@ const ACCENT = '#e79a4f';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing', ({ data }) => !data.draft);
-  return [
+  // slug = id completo (en/lorem-queue), não só o nome do arquivo: um post
+  // traduzido existe nos dois idiomas com o mesmo nome de arquivo, e colar só
+  // o nome geraria duas rotas com params idênticos e quebraria o build.
+  const paths = [
     { params: { slug: 'home' }, props: { title: 'Alvaro Galhardo', kicker: 'Backend Engineer' } },
     ...posts.map((p) => ({
-      params: { slug: p.id.split('/').pop()! },
+      params: { slug: p.id },
       props: { title: p.data.title, kicker: p.data.lang === 'pt' ? 'Escritos' : 'Writing' }
     }))
   ];
+
+  const seen = new Set<string>();
+  for (const { params } of paths) {
+    if (seen.has(params.slug)) {
+      throw new Error(`Rota OG duplicada para o slug "${params.slug}"`);
+    }
+    seen.add(params.slug);
+  }
+
+  return paths;
 }
 
 export async function GET({ props }: APIContext) {
   const { title, kicker } = props as { title: string; kicker: string };
 
+  try {
+    return await render(title, kicker);
+  } catch (err) {
+    // Um glifo ausente na fonte ou um arquivo faltando não deve derrubar o
+    // build inteiro: cai para um card sólido sem texto.
+    console.warn(`[og] falha ao gerar "${title}": ${err instanceof Error ? err.message : err}`);
+    const fallback = await sharp({
+      create: { width: 1200, height: 630, channels: 3, background: BG }
+    })
+      .png()
+      .toBuffer();
+    return new Response(new Uint8Array(fallback), {
+      headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }
+    });
+  }
+}
+
+async function render(title: string, kicker: string) {
   const [serif, mono] = await Promise.all([
     readFile('src/assets/fonts/Newsreader-Regular.ttf'),
     readFile('src/assets/fonts/JetBrainsMono-Regular.ttf')

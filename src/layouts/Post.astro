@@ -1,6 +1,7 @@
 ---
 import Base from './Base.astro';
 import { getLangFromUrl, localizePath, useTranslations } from '../i18n/utils';
+import { ldJson } from '../lib/ld';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -9,7 +10,6 @@ interface Props {
 const { entry } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const slug = entry.id.split('/').pop()!;
 const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
   day: 'numeric',
   month: 'long',
@@ -34,13 +34,13 @@ const article = {
 <Base
   title={`${entry.data.title} — Alvaro Galhardo`}
   description={entry.data.summary}
-  ogSlug={slug}
-  translated={false}
+  ogSlug={entry.id}
+  translated={true}
 >
   <script
     type="application/ld+json"
     is:inline
-    set:html={JSON.stringify(article)}
+    set:html={ldJson(article)}
     slot="head"
   />
   <main class="wrap" id="top">
