@@ -5,14 +5,16 @@ português), tema claro e escuro.
 
 ## Estado
 
-v1 de layout. A estrutura está completa e auditada; **todo o texto visível ainda
-é lorem ipsum**. Ver as pendências em [docs/auditoria.md](docs/auditoria.md).
+v1 de layout. A estrutura está completa e auditada — Lighthouse 100 em
+performance, acessibilidade, boas práticas e SEO nas quatro rotas principais —
+mas **todo o texto visível ainda é lorem ipsum**. O próximo passo é conteúdo
+real.
 
 ## Comandos
 
 ```bash
 npm run dev        # desenvolvimento
-npm test           # 134 testes em Vitest
+npm test           # 140 testes em Vitest
 npm run build      # build + validação de conteúdo
 npm run check:seo  # auditoria de SEO sobre dist/
 ```
@@ -40,7 +42,7 @@ mantém puros, testáveis sem browser e sem conhecer a fonte dos dados.
 
 Vitest apenas, sem browser: contraste dos tokens (`culori`), utilitários de i18n,
 schemas Zod e render de componente pelo Container API do Astro. Acessibilidade e
-responsividade são auditoria manual, registrada em `docs/auditoria.md`.
+responsividade são auditoria manual.
 
 O teste de contraste é o mais útil: ele calcula o contraste WCAG de cada par
 texto/fundo nos dois temas e falhou de verdade quando as cores do design não
@@ -48,11 +50,16 @@ passavam.
 
 ## Design
 
-O design vive em [docs/design/handoff.md](docs/design/handoff.md) e no protótipo
-em `docs/design/prototype.dc.html`. As divergências deliberadas entre o handoff e
-a implementação estão em
-[docs/superpowers/specs/2026-09-02-site-pessoal-design.md](docs/superpowers/specs/2026-09-02-site-pessoal-design.md).
+Minimalista e text-first: sem imagens, coluna única de 760px, uma cor de
+destaque, hairlines de 1px e uma textura de pontos discreta. Serif (Newsreader)
+para prosa, mono (JetBrains Mono) para metadados — ambas auto-hospedadas, nunca
+por CDN. Cores em `oklch`, com contraste AA verificado por teste nos dois temas.
+Um único breakpoint em 700px; abaixo dele a navegação vira um drawer.
 
 ## Deploy
 
-Cloudflare Pages. Ver [docs/deploy.md](docs/deploy.md).
+Cloudflare Pages, servindo `dist/`. O `wrangler.toml` declara
+`pages_build_output_dir`, então o Cloudflare reconhece a saída sem configuração
+extra: build command `npm run build`, output `dist`, Node 22. O domínio vive em
+`astro.config.mjs` como `site` — canonical, `hreflang`, sitemap, feeds e OG
+images derivam desse valor.
