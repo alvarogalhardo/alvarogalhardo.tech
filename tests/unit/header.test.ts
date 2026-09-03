@@ -59,6 +59,12 @@ describe('Header — acessibilidade', () => {
     expect(html).toContain('inert');
   });
 
+  it('o drawer se declara como diálogo modal', async () => {
+    const html = await render('/');
+    expect(html).toContain('role="dialog"');
+    expect(html).toContain('aria-modal="true"');
+  });
+
   it('os glifos decorativos estão escondidos de leitores', async () => {
     const html = await render('/');
     const dot = html.match(/<span class="dot"[^>]*>/)?.[0] ?? '';

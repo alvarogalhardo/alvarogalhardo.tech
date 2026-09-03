@@ -27,7 +27,7 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
       <span class="sep" aria-hidden="true"></span>
       <a href={otherHref} class="chip" hreflang={other} data-lang-switch>{t('lang.toggle')}</a>
       <button type="button" class="chip" data-theme-toggle aria-label={t('theme.toggle')}>
-        <span data-theme-icon aria-hidden="true">&#9790;</span>
+        <span data-theme-icon aria-hidden="true">&#9728;</span>
       </button>
     </nav>
 
@@ -39,7 +39,16 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
 
 <div class="backdrop" data-menu-backdrop hidden></div>
 
-<aside id="menu-panel" class="drawer" data-menu-panel aria-label={t('menu.title')} aria-hidden="true" inert>
+<aside
+  id="menu-panel"
+  class="drawer"
+  data-menu-panel
+  role="dialog"
+  aria-modal="true"
+  aria-label={t('menu.title')}
+  aria-hidden="true"
+  inert
+>
   <div class="drawer-head">
     <span class="mono drawer-title">{t('menu.title')}</span>
     <button type="button" class="burger" data-menu-close aria-label={t('menu.close')}>
@@ -281,7 +290,7 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
   function syncThemeUI() {
     const isLight = root.dataset.theme === 'light';
     const icon = document.querySelector('[data-theme-icon]');
-    if (icon) icon.textContent = isLight ? '\u2600' : '\u263E';
+    if (icon) icon.textContent = isLight ? '\u263E' : '\u2600';
     const name = document.querySelector('[data-theme-name]');
     if (name) name.textContent = isLight ? NAMES[lang].light : NAMES[lang].dark;
   }
@@ -324,7 +333,9 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
 
       if (next) {
         closeBtn!.focus();
-      } else {
+      } else if (openBtn!.offsetParent !== null) {
+        // Em desktop o hamburguer e display:none; focar nele jogaria o foco
+        // no <body>. So devolve o foco quando o botao esta visivel.
         openBtn!.focus();
       }
     }
@@ -338,7 +349,25 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
     }
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) setOpen(false);
+      if (!isOpen) return;
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      // Prende o Tab dentro do painel enquanto o drawer esta aberto.
+      const focusables = panel!.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !panel!.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !panel!.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     });
 
     // Limpa o estado ARIA ao voltar para desktop. O scroll ja esta protegido
