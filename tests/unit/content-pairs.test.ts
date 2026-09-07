@@ -9,9 +9,6 @@ const slugs = (dir: 'en' | 'pt') =>
 
 describe('pares de tradução dos posts', () => {
   it('todo post en tem par pt com o mesmo slug e vice-versa', () => {
-    // O seletor de idioma e o hreflang dos posts assumem slug idêntico nos dois
-    // idiomas (Post.astro passa translated={true}). Um post sem par geraria um
-    // link 404 e o check-seo.py falharia no build.
     expect(slugs('en')).toEqual(slugs('pt'));
   });
 });

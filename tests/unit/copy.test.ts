@@ -2,9 +2,6 @@ import { describe, it, expect } from 'vitest';
 import { home, notFound } from '../../src/data/copy';
 import { meta } from '../../src/data/meta';
 
-// Achata um objeto aninhado em pares [caminho, string]. A prosa da home e o SEO
-// crescem por idioma; um `en` com uma chave a mais que o `pt` (ou uma string
-// vazia deixada como lembrete) passa despercebido até alguém abrir a página.
 const flat = (obj: unknown, prefix = ''): [string, string][] =>
   typeof obj === 'string'
     ? [[prefix, obj]]

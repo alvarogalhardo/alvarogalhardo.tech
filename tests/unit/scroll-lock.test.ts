@@ -17,8 +17,6 @@ describe('trava de scroll do drawer', () => {
   });
 
   it('o script não trava o scroll por estilo inline', () => {
-    // Estilo inline sobrevive ao viewport crescer e deixa a pagina sem
-    // rolagem se o JS nao limpar. O CSS destrava sozinho acima de 700px.
     expect(header).not.toContain('body.style.overflow');
   });
 

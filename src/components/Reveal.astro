@@ -1,11 +1,3 @@
----
-/**
- * O estado inicial oculto é aplicado por JavaScript, nunca por CSS. Se o
- * ocultamento morasse na folha de estilo, uma falha de JS deixaria a página
- * permanentemente em branco — e é uma falha que não aparece em teste local.
- */
----
-
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
@@ -47,11 +39,6 @@
 
     for (const el of nodes) io.observe(el);
 
-    // Rede de segurança. Sempre há algo no viewport no carregamento, então o
-    // observer deveria disparar quase de imediato. Se em 2s ele não deu um
-    // único sinal de vida, algo o impediu de rodar — e insistir na animação
-    // deixaria a página com conteúdo invisível para sempre. Melhor abrir mão
-    // do efeito do que do conteúdo.
     window.setTimeout(() => {
       if (alive) return;
       io.disconnect();

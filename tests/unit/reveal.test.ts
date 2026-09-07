@@ -3,13 +3,10 @@ import { readFileSync } from 'node:fs';
 
 const reveal = readFileSync('src/components/Reveal.astro', 'utf8');
 const texture = readFileSync('src/components/Texture.astro', 'utf8');
-// Só o bloco <style>: o frontmatter comenta o porquê de evitar mix-blend-mode,
-// e uma busca no arquivo inteiro casaria com a própria explicação.
 const textureCss = texture.slice(texture.indexOf('<style>'));
 
 describe('Reveal.astro', () => {
   it('não contém bloco de estilo — o ocultamento é só por JS', () => {
-    // Se opacity:0 morasse no CSS, uma falha de JS deixaria a pagina em branco.
     expect(reveal).not.toContain('<style');
   });
 
@@ -53,7 +50,6 @@ describe('Texture.astro', () => {
   });
 
   it('fica atrás do conteúdo, não à frente', () => {
-    // z-index positivo poe os pontos por cima do texto e do header.
     const z = textureCss.match(/z-index:\s*(-?\d+)/)?.[1];
     expect(z).toBeDefined();
     expect(Number(z)).toBeLessThan(0);
@@ -72,14 +68,10 @@ describe('camada de fundo', () => {
   });
 
   it('o body não repinta o fundo — esconderia a textura', () => {
-    // Um <body> com fundo opaco pinta acima de filhos com z-index negativo.
     expect(bloco('body {')).not.toContain('background');
   });
 
   it('o html não transiciona o fundo', () => {
-    // O fundo do elemento raiz propaga para o canvas do viewport e a transicao
-    // nao acompanha: o valor computado trava na cor antiga e a troca de tema
-    // deixa texto claro sobre fundo claro. Verificado no browser.
     const h = bloco('html {');
     const trans = h.match(/transition:([^;]*)/)?.[1] ?? '';
     expect(trans).not.toContain('background');
@@ -90,8 +82,6 @@ describe('camada de fundo', () => {
   });
 
   it('o body não cria contexto de empilhamento', () => {
-    // opacity/transform/filter/isolation no body prendem o z-index -1 dentro
-    // dele, e a textura desaparece atras do proprio fundo.
     const b = bloco('body {');
     for (const prop of ['opacity:', 'transform:', 'filter:', 'isolation:']) {
       expect(b, `body nao pode declarar ${prop}`).not.toContain(prop);

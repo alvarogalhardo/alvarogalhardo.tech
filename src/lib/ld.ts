@@ -1,11 +1,3 @@
-/**
- * Serializa um objeto para embutir em `<script type="application/ld+json">`.
- *
- * `JSON.stringify` sozinho nao escapa `<`, `>`, `&` nem os separadores de linha
- * U+2028 / U+2029 — um titulo com `</script>` fecharia a tag e quebraria a
- * pagina. Hoje so entram literais e frontmatter validado por Zod, mas o custo
- * de blindar e uma linha.
- */
 const LINE_SEPARATOR = new RegExp('\\u2028', 'g');
 const PARAGRAPH_SEPARATOR = new RegExp('\\u2029', 'g');
 

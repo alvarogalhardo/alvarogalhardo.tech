@@ -4,20 +4,12 @@ import { readFile } from 'node:fs/promises';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
-/**
- * Hex fixos em vez dos tokens oklch: satori não resolve variáveis CSS nem
- * oklch. Estes valores são a conversão sRGB de --bg e --accent do tema
- * escuro. Se os tokens mudarem, converta e atualize aqui.
- */
 const BG = '#151a21';
 const FG = '#e4e4e5';
 const ACCENT = '#e79a4f';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing', ({ data }) => !data.draft);
-  // slug = id completo (en/lorem-queue), não só o nome do arquivo: um post
-  // traduzido existe nos dois idiomas com o mesmo nome de arquivo, e colar só
-  // o nome geraria duas rotas com params idênticos e quebraria o build.
   const paths = [
     { params: { slug: 'home' }, props: { title: 'Alvaro Galhardo', kicker: 'Backend Engineer' } },
     ...posts.map((p) => ({
@@ -43,8 +35,6 @@ export async function GET({ props }: APIContext) {
   try {
     return await render(title, kicker);
   } catch (err) {
-    // Um glifo ausente na fonte ou um arquivo faltando não deve derrubar o
-    // build inteiro: cai para um card sólido sem texto.
     console.warn(`[og] falha ao gerar "${title}": ${err instanceof Error ? err.message : err}`);
     const fallback = await sharp({
       create: { width: 1200, height: 630, channels: 3, background: BG }

@@ -303,9 +303,7 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
       root.dataset.theme = next;
       try {
         localStorage.setItem(THEME_KEY, next);
-      } catch (e) {
-        /* modo privado: o tema vale só nesta sessão */
-      }
+      } catch {}
       syncThemeUI();
     });
   }
@@ -326,16 +324,11 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
       panel!.setAttribute('aria-hidden', String(!next));
       panel!.toggleAttribute('inert', !next);
       openBtn!.setAttribute('aria-expanded', String(next));
-      // A trava de scroll e uma classe, nao um estilo inline: o CSS so a
-      // aplica abaixo de 700px, entao voltar para desktop destrava sozinho
-      // mesmo que o listener de matchMedia abaixo nao dispare.
       document.body.classList.toggle('menu-open', next);
 
       if (next) {
         closeBtn!.focus();
       } else if (openBtn!.offsetParent !== null) {
-        // Em desktop o hamburguer e display:none; focar nele jogaria o foco
-        // no <body>. So devolve o foco quando o botao esta visivel.
         openBtn!.focus();
       }
     }
@@ -355,7 +348,6 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
         return;
       }
       if (e.key !== 'Tab') return;
-      // Prende o Tab dentro do painel enquanto o drawer esta aberto.
       const focusables = panel!.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
       if (focusables.length === 0) return;
       const first = focusables[0];
@@ -370,8 +362,6 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
       }
     });
 
-    // Limpa o estado ARIA ao voltar para desktop. O scroll ja esta protegido
-    // pelo CSS; isto so evita deixar aria-expanded="true" para tras.
     const desktop = window.matchMedia('(min-width: 701px)');
     desktop.addEventListener('change', (e) => {
       if (e.matches && isOpen) setOpen(false);

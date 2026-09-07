@@ -1,17 +1,9 @@
 import { ui, defaultLang, type Lang, type UIKey } from './ui';
 
-/**
- * O build do Astro usa formato `directory`, então toda rota resolve com barra
- * final (`/pt/`, `/writing/`). Canonical, hreflang e sitemap precisam usar
- * exatamente a mesma forma, senão a página se contradiz e o Google descarta
- * o par de hreflang.
- */
 export function withTrailingSlash(path: string): string {
   if (path === '/') return '/';
   const [base, hash] = path.split('#');
   const last = base.split('/').pop() ?? '';
-  // Arquivos (rss.xml, cv.pdf, og/home.png) sao servidos no caminho exato.
-  // Acrescentar barra aqui geraria 404 — foi o que quebrou o link do feed.
   const isFile = /\.[a-z0-9]+$/i.test(last);
   const normalized = isFile || base.endsWith('/') ? base : `${base}/`;
   return hash ? `${normalized}#${hash}` : normalized;

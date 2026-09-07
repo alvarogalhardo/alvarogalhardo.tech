@@ -12,11 +12,6 @@ interface Props {
   title: string;
   description: string;
   ogSlug?: string;
-  /**
-   * Se esta rota tem equivalente no outro idioma. Quando false, o layout emite
-   * só o canonical: anunciar um hreflang para uma URL inexistente faz o Google
-   * tratar o par inteiro como erro — pior do que não declarar nada.
-   */
   translated?: boolean;
 }
 

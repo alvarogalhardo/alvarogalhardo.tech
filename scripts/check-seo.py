@@ -1,13 +1,3 @@
-"""
-Auditoria de SEO sobre o build em dist/.
-
-Verifica o que o Lighthouse nao cobre e que quebra silenciosamente num site
-bilingue: coerencia entre canonical e hreflang, reciprocidade entre os pares
-de idioma, e unicidade de title e description.
-
-Uso: npm run build && python scripts/check-seo.py
-"""
-
 import io
 import os
 import re
