@@ -25,8 +25,9 @@ npm run check:seo  # auditoria de SEO sobre dist/
 src/
 ├── content/          posts e projetos em MDX, por idioma
 ├── content.config.ts schemas Zod — o build falha com frontmatter inválido
-├── data/             experiência e estante (dados tipados, não conteúdo)
-├── i18n/             dicionário e resolução de rota por idioma
+├── data/             texto tipado em TS: experiência, estante, prosa da home
+│                     (copy.ts) e title/description das páginas (meta.ts)
+├── i18n/             dicionário de rótulos e resolução de rota por idioma
 ├── lib/
 │   ├── tokens.ts     cores; espelhado em styles/tokens.css e testado
 │   └── content.ts    conversão coleção → props de componente
