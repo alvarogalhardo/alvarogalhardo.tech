@@ -3,13 +3,11 @@ import SectionHeading from './SectionHeading.astro';
 import MetaRow from './MetaRow.astro';
 import { books } from '../data/books';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { home } from '../data/copy';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const note = {
-  en: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
-  pt: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
-}[lang];
+const note = home[lang].shelfNote;
 ---
 
 <section id="shelf" class="section">

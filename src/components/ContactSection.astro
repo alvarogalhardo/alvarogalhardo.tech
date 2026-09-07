@@ -1,13 +1,11 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { home } from '../data/copy';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const line = {
-  en: 'Lorem ipsum dolor sit amet \u2014 consectetur adipiscing elit sed do eiusmod tempor.',
-  pt: 'Lorem ipsum dolor sit amet \u2014 consectetur adipiscing elit sed do eiusmod tempor.'
-}[lang];
+const line = home[lang].contactLine;
 ---
 
 <section id="contact" class="section">

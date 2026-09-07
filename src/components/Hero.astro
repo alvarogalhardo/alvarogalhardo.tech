@@ -1,23 +1,10 @@
 ---
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { home } from '../data/copy';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const copy = {
-  en: {
-    greeting: 'Hey, I\u2019m Alvaro.',
-    lead: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit \u2014 APIs, data models, and the systems that have to stay upright at 3am.',
-    p1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-    p2: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-  },
-  pt: {
-    greeting: 'Oi, eu sou o Alvaro.',
-    lead: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit \u2014 APIs, modelos de dados e os sistemas que precisam ficar de p\u00e9 \u00e0s 3 da manh\u00e3.',
-    p1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.',
-    p2: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-  }
-}[lang];
+const copy = home[lang].hero;
 ---
 
 <section class="hero">
