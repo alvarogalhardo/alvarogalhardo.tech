@@ -1,5 +1,8 @@
 name: ci
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
 
 # Sem escrita: o job só lê o código e roda testes/build.
 permissions:
