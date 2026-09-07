@@ -7,6 +7,7 @@ import Texture from '../components/Texture.astro';
 import Reveal from '../components/Reveal.astro';
 import { getLangFromUrl, alternatePath, localizePath, withTrailingSlash } from '../i18n/utils';
 import { ldJson } from '../lib/ld';
+import { writingLive } from '../data/site';
 
 interface Props {
   title: string;
@@ -69,7 +70,7 @@ const person = {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={title} />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="alternate" type="application/rss+xml" title="Alvaro Galhardo" href={feedHref} />
+    {writingLive && <link rel="alternate" type="application/rss+xml" title="Alvaro Galhardo" href={feedHref} />}
     <script type="application/ld+json" is:inline set:html={ldJson(person)} />
     <slot name="head" />
   </head>

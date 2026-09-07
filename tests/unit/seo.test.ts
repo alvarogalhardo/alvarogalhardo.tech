@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import Base from '../../src/layouts/Base.astro';
+import { writingLive } from '../../src/data/site';
 import { renderComponent, SITE } from './helpers';
 
 const render = (path: string, props: Record<string, unknown> = {}) =>
@@ -38,14 +39,13 @@ describe('Open Graph', () => {
 });
 
 describe('feed', () => {
-  it('a raiz aponta para /rss.xml', async () => {
-    const html = await render('/');
-    expect(html).toContain('application/rss+xml');
-    expect(html).toContain(`href="${SITE}/rss.xml"`);
-  });
-
-  it('a rota pt aponta para /pt/rss.xml', async () => {
-    expect(await render('/pt')).toContain(`href="${SITE}/pt/rss.xml"`);
+  it('anuncia o feed do idioma só quando writingLive', async () => {
+    const en = await render('/');
+    expect(en.includes('application/rss+xml')).toBe(writingLive);
+    if (writingLive) {
+      expect(en).toContain(`href="${SITE}/rss.xml"`);
+      expect(await render('/pt')).toContain(`href="${SITE}/pt/rss.xml"`);
+    }
   });
 });
 

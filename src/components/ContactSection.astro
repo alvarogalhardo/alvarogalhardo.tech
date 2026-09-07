@@ -2,14 +2,16 @@
 import SectionHeading from './SectionHeading.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { home } from '../data/copy';
+import { writingLive } from '../data/site';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const line = home[lang].contactLine;
+const num = writingLive ? '05' : '04';
 ---
 
 <section id="contact" class="section">
-  <SectionHeading num="05" label={t('nav.contact')} />
+  <SectionHeading num={num} label={t('nav.contact')} />
   <p class="line" data-reveal>{line}</p>
   <div class="cta mono" id="contact-list" data-reveal>
     <a href="mailto:alvaromgfernandes@gmail.com" class="btn primary">{t('hero.cta.email')}</a>

@@ -1,9 +1,11 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import { toPostCards } from '../lib/content';
+import { writingLive } from '../data/site';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
+  if (!writingLive) return new Response(null, { status: 404 });
   const posts = toPostCards(await getCollection('writing'), 'en');
   const self = new URL('/rss.xml', context.site).href;
 
