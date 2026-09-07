@@ -5,7 +5,7 @@ import sys
 from collections import Counter
 
 DIST = 'dist'
-SITE = 'https://alvarogalhardo.dev'
+SITE = 'https://alvarogalhardo.tech'
 
 
 def paginas():

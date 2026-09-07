@@ -9,6 +9,6 @@ describe('astro config', () => {
   });
 
   it('define o site para geração de sitemap e canonical', () => {
-    expect(config.site).toBe('https://alvarogalhardo.dev');
+    expect(config.site).toBe('https://alvarogalhardo.tech');
   });
 });

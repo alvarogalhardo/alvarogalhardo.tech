@@ -29,11 +29,11 @@ export async function getStaticPaths() {
   return paths;
 }
 
-export async function GET({ props }: APIContext) {
+export async function GET({ props, site }: APIContext) {
   const { title, kicker } = props as { title: string; kicker: string };
 
   try {
-    return await render(title, kicker);
+    return await render(title, kicker, site?.host ?? 'alvarogalhardo.tech');
   } catch (err) {
     console.warn(`[og] falha ao gerar "${title}": ${err instanceof Error ? err.message : err}`);
     const fallback = await sharp({
@@ -47,7 +47,7 @@ export async function GET({ props }: APIContext) {
   }
 }
 
-async function render(title: string, kicker: string) {
+async function render(title: string, kicker: string, host: string) {
   const [serif, mono] = await Promise.all([
     readFile('src/assets/fonts/Newsreader-Regular.ttf'),
     readFile('src/assets/fonts/JetBrainsMono-Regular.ttf')
@@ -100,7 +100,7 @@ async function render(title: string, kicker: string) {
                 color: '#a8a8aa'
               },
               children: [
-                { type: 'span', props: { children: 'alvarogalhardo.dev' } },
+                { type: 'span', props: { children: host } },
                 { type: 'span', props: { children: 'Alvaro Galhardo' } }
               ]
             }
