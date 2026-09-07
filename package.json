@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/postbuild.mjs",
     "preview": "astro preview",
     "test": "vitest run",
     "audit": "lighthouse http://localhost:4321 --only-categories=performance,accessibility,best-practices,seo --view",
