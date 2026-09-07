@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Alvaro Galhardo',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    description: 'Notas sobre as decisões técnicas por trás dos sistemas que Alvaro Galhardo constrói.',
     site: context.site!,
     xmlns: { atom: 'http://www.w3.org/2005/Atom' },
     customData: [
