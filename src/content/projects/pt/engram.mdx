@@ -1,0 +1,13 @@
+---
+name: "engram"
+year: 2026
+summary: Um app de flashcards estilo Anki com cliente Android e servidor de sync self-hosted, feito para funcionar totalmente offline e reconciliar estado entre dispositivos. Ainda está em estágio inicial e em desenvolvimento ativo.
+stack: ["Kotlin", "Jetpack Compose", "Go", "PostgreSQL", "Docker", "Terraform", "GitHub Actions"]
+url: "https://github.com/alvarogalhardo/engram"
+---
+
+O engram implementa sync offline-first por conta própria: merges
+last-write-wins, tombstones para exclusões e cursores lógicos para replicação
+incremental, inspirado por *Designing Data-Intensive Applications*. O
+protocolo e as decisões por trás dele estão documentados como ADRs no
+repositório.
