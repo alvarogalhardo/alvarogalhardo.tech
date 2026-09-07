@@ -4,8 +4,14 @@ node_modules/
 
 *.log
 .DS_Store
+
+# segredos e estado local — nunca versionar
 .env
-.env.production
+.env.*
+!.env.example
+.dev.vars
+.wrangler/
+wrangler.toml
 
 # editor / agent config
 .claude/
