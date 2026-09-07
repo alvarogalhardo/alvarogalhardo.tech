@@ -5,6 +5,8 @@ import WritingSection from '../../src/components/WritingSection.astro';
 import ShelfSection from '../../src/components/ShelfSection.astro';
 import ContactSection from '../../src/components/ContactSection.astro';
 import Footer from '../../src/components/Footer.astro';
+import { experience } from '../../src/data/experience';
+import { books } from '../../src/data/books';
 import { renderComponent, SITE } from './helpers';
 
 const at = (Comp: unknown, path: string, props: Record<string, unknown> = {}) =>
@@ -30,8 +32,8 @@ const posts = [
 ];
 
 describe('ExperienceSection', () => {
-  it('lista as três posições', async () => {
-    expect(countRows(await at(ExperienceSection, '/'))).toBe(3);
+  it('lista todas as posições', async () => {
+    expect(countRows(await at(ExperienceSection, '/'))).toBe(experience.length);
   });
   it('expõe a âncora #work', async () => {
     expect(await at(ExperienceSection, '/')).toContain('id="work"');
@@ -84,8 +86,8 @@ describe('WritingSection', () => {
 });
 
 describe('ShelfSection', () => {
-  it('lista os três livros', async () => {
-    expect(countRows(await at(ShelfSection, '/'))).toBe(3);
+  it('lista todos os livros', async () => {
+    expect(countRows(await at(ShelfSection, '/'))).toBe(books.length);
   });
   it('usa o status traduzido em pt', async () => {
     expect(await at(ShelfSection, '/pt')).toContain('Lendo');
