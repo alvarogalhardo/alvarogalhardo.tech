@@ -5,13 +5,14 @@ import MetaRow from '../../../components/MetaRow.astro';
 import { getCollection } from 'astro:content';
 import { toPostCards } from '../../../lib/content';
 import { useTranslations, localizePath } from '../../../i18n/utils';
+import { meta } from '../../../data/meta';
 
 const t = useTranslations('pt');
 const posts = toPostCards(await getCollection('writing'), 'pt');
 const fmt = new Intl.DateTimeFormat('pt-BR', { month: 'short', year: 'numeric' });
 ---
 
-<Base title="Escritos — Alvaro Galhardo" description="Lorem ipsum — notas sobre as decisões por trás dos sistemas que construo.">
+<Base title={meta.pt.writing.title} description={meta.pt.writing.description}>
   <main class="wrap" id="top">
     <h1 class="visually-hidden">{t('nav.writing')}</h1>
     <div class="head">

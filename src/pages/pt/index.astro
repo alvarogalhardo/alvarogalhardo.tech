@@ -8,12 +8,13 @@ import ShelfSection from '../../components/ShelfSection.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import { getCollection } from 'astro:content';
 import { toProjectCards, toPostCards } from '../../lib/content';
+import { meta } from '../../data/meta';
 
 const projects = toProjectCards(await getCollection('projects'), 'pt');
 const posts = toPostCards(await getCollection('writing'), 'pt', 3);
 ---
 
-<Base title="Alvaro Galhardo — Engenheiro Backend" description="Lorem ipsum dolor sit amet — engenheiro backend, APIs, modelos de dados e sistemas.">
+<Base title={meta.pt.home.title} description={meta.pt.home.description}>
   <main class="wrap" id="top">
     <Hero />
     <ExperienceSection />
