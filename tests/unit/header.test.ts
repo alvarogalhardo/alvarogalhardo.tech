@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import Header from '../../src/components/Header.astro';
+import { writingLive } from '../../src/data/site';
 import { renderComponent, SITE } from './helpers';
 
 const render = (path: string) => renderComponent(Header, { url: `${SITE}${path}` });
@@ -8,8 +9,12 @@ describe('Header — idioma', () => {
   it('traduz os rótulos de navegação em pt', async () => {
     const html = await render('/pt');
     expect(html).toContain('Experiência');
-    expect(html).toContain('Escritos');
     expect(html).toContain('Estante');
+  });
+
+  it('só mostra o link de writing quando writingLive', async () => {
+    const html = await render('/pt');
+    expect(html.includes('Escritos')).toBe(writingLive);
   });
 
   it('usa os rótulos em inglês na raiz', async () => {
@@ -76,7 +81,8 @@ describe('Header — drawer mobile', () => {
   it('o drawer repete os links do nav mais contato', async () => {
     const html = await render('/');
     const links = html.match(/data-menu-link/g) ?? [];
-    expect(links).toHaveLength(5);
+    // work, projects, (writing só se writingLive), shelf, contact
+    expect(links).toHaveLength(writingLive ? 5 : 4);
     expect(html).toContain('Contact');
   });
 

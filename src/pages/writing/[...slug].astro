@@ -1,14 +1,35 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
 import Post from '../../layouts/Post.astro';
+import WritingArchive from '../../components/WritingArchive.astro';
+import { toPostCards } from '../../lib/content';
+import { meta } from '../../data/meta';
+import { writingLive } from '../../data/site';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('writing', ({ data }) => !data.draft && data.lang === 'en');
-  return posts.map((entry) => ({ params: { slug: entry.id.split('/').pop() }, props: { entry } }));
+  if (!writingLive) return [];
+  const entries = await getCollection('writing', ({ data }) => !data.draft && data.lang === 'en');
+  return [
+    { params: { slug: undefined }, props: { entry: null } },
+    ...entries.map((entry) => ({ params: { slug: entry.id.split('/').pop() }, props: { entry } }))
+  ];
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const rendered = entry ? await render(entry) : null;
+const Content = rendered?.Content;
+const posts = entry ? [] : toPostCards(await getCollection('writing'), 'en');
 ---
 
-<Post entry={entry}><Content /></Post>
+{
+  entry && Content ? (
+    <Post entry={entry}>
+      <Content />
+    </Post>
+  ) : (
+    <Base title={meta.en.writing.title} description={meta.en.writing.description}>
+      <WritingArchive posts={posts} lang="en" />
+    </Base>
+  )
+}

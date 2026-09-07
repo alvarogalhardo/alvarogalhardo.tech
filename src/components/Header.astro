@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations, alternatePath, localizePath } from '../i18n/utils';
+import { writingLive } from '../data/site';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -10,7 +11,7 @@ const otherHref = alternatePath(Astro.url, other);
 const nav = [
   { href: `${home}#work`, label: t('nav.experience') },
   { href: `${home}#projects`, label: t('nav.projects') },
-  { href: `${home}#writing`, label: t('nav.writing') },
+  ...(writingLive ? [{ href: `${home}#writing`, label: t('nav.writing') }] : []),
   { href: `${home}#shelf`, label: t('nav.books') }
 ];
 const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }];

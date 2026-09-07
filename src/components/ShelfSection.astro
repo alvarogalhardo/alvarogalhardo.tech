@@ -4,14 +4,16 @@ import MetaRow from './MetaRow.astro';
 import { books } from '../data/books';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { home } from '../data/copy';
+import { writingLive } from '../data/site';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const note = home[lang].shelfNote;
+const num = writingLive ? '04' : '03';
 ---
 
 <section id="shelf" class="section">
-  <SectionHeading num="04" label={t('nav.books')} />
+  <SectionHeading num={num} label={t('nav.books')} />
   <p class="note" data-reveal>{note}</p>
   <div id="shelf-list">
     {

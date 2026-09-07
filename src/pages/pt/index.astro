@@ -9,9 +9,10 @@ import ContactSection from '../../components/ContactSection.astro';
 import { getCollection } from 'astro:content';
 import { toProjectCards, toPostCards } from '../../lib/content';
 import { meta } from '../../data/meta';
+import { writingLive } from '../../data/site';
 
 const projects = toProjectCards(await getCollection('projects'), 'pt');
-const posts = toPostCards(await getCollection('writing'), 'pt', 3);
+const posts = writingLive ? toPostCards(await getCollection('writing'), 'pt', 3) : [];
 ---
 
 <Base title={meta.pt.home.title} description={meta.pt.home.description}>
@@ -19,7 +20,7 @@ const posts = toPostCards(await getCollection('writing'), 'pt', 3);
     <Hero />
     <ExperienceSection />
     <ProjectsSection projects={projects} />
-    <WritingSection posts={posts} />
+    {writingLive && <WritingSection posts={posts} />}
     <ShelfSection />
     <ContactSection />
   </main>
