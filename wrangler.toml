@@ -7,6 +7,8 @@ compatibility_date = "2026-09-07"
 
 [assets]
 directory = "./dist"
-# rota sem arquivo correspondente -> dist/404.html com status 404.
-# o par /pt/* -> /pt/404/ continua vindo de public/_redirects.
+# rota sem arquivo -> o 404.html mais proximo subindo a arvore, com status 404.
+# scripts/postbuild.mjs emite dist/pt/404.html pra rota /pt/* inexistente cair no
+# 404 em portugues. (o Workers rejeita status 404 em _redirects, entao nao ha
+# _redirects; ver .docs/architecture.md.)
 not_found_handling = "404-page"

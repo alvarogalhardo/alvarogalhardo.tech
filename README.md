@@ -62,6 +62,6 @@ Um único breakpoint em 700px; abaixo dele a navegação vira um drawer.
 Site estático no Cloudflare Workers (assets estáticos, sem script): build
 `npm run build`, saída `dist`, config em `wrangler.toml`, Node fixado em
 `.nvmrc`. Cada merge no `main` publica pelo Workers Builds ligado ao repo.
-`public/_headers` e `public/_redirects` vão no `dist/` e são aplicados pela edge.
-O domínio vive em `astro.config.mjs` como `site` — canonical, `hreflang`,
-sitemap, feeds e OG images derivam desse valor.
+`public/_headers` vai no `dist/` e é aplicado pela edge; rota inexistente cai no
+`404.html` mais próximo (status 404). O domínio vive em `astro.config.mjs` como
+`site` — canonical, `hreflang`, sitemap, feeds e OG images derivam desse valor.
