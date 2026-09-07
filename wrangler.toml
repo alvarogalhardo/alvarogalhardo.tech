@@ -12,3 +12,7 @@ directory = "./dist"
 # 404 em portugues. (o Workers rejeita status 404 em _redirects, entao nao ha
 # _redirects; ver .docs/architecture.md.)
 not_found_handling = "404-page"
+[observability.logs]
+enabled = true
+invocation_logs = false
+persist = true
