@@ -1,0 +1,12 @@
+# Site estático (Astro -> dist/). Worker "assets-only": sem script `main`, o
+# Cloudflare serve os arquivos direto. Publica pelo Workers Builds ligado ao
+# repositório (build `npm run build`, deploy `npx wrangler deploy`) — o build
+# roda autenticado na infra do Cloudflare, sem token em lugar nenhum.
+name = "alvarogalhardo"
+compatibility_date = "2026-09-07"
+
+[assets]
+directory = "./dist"
+# rota sem arquivo correspondente -> dist/404.html com status 404.
+# o par /pt/* -> /pt/404/ continua vindo de public/_redirects.
+not_found_handling = "404-page"
