@@ -1,0 +1,84 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+import { notFound } from '../data/copy';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const copy = notFound[lang];
+const home = localizePath('/', lang);
+---
+
+<section class="not-found">
+  <p class="mono role">{copy.role}</p>
+  <h1>{copy.title}</h1>
+  <p class="lead">{copy.lead}</p>
+  <div class="cta mono">
+    <a href={home} class="btn primary">{copy.ctaHome}</a>
+    <a href="mailto:alvaromgfernandes@gmail.com" class="btn">{t('hero.cta.email')}</a>
+  </div>
+</section>
+
+<style>
+  .not-found {
+    padding-block: 140px 120px;
+    max-width: 60ch;
+  }
+  .role {
+    margin-bottom: 22px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin-bottom: 20px;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .lead {
+    margin-bottom: 34px;
+    max-width: 54ch;
+    font-size: 18px;
+    line-height: 1.66;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .btn {
+    border: 1px solid var(--lineControl);
+    color: var(--muted);
+    padding: 10px 16px;
+    border-radius: 3px;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+  .btn:hover {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+  .primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .primary:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  @media (max-width: 700px) {
+    .not-found {
+      padding-block: 90px 70px;
+    }
+    .lead {
+      font-size: 16px;
+    }
+    .btn {
+      padding: 13px 16px;
+    }
+  }
+</style>

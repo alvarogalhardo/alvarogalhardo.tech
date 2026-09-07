@@ -1,0 +1,5 @@
+# O 404 raiz (dist/404.html) e' descoberto automaticamente pelo Cloudflare
+# Pages. O par em pt/ so existe como pt/404/index.html (Astro nao aplica o
+# tratamento especial de 404 fora da raiz de src/pages), entao sem esta regra
+# qualquer rota /pt/* inexistente cairia no 404 em ingles.
+/pt/*  /pt/404/  404

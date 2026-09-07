@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotFoundSection from '../../components/NotFoundSection.astro';
+import { meta } from '../../data/meta';
+---
+
+<Base title={meta.pt.notFound.title} description={meta.pt.notFound.description} translated={false}>
+  <main class="wrap" id="top">
+    <NotFoundSection />
+  </main>
+</Base>
