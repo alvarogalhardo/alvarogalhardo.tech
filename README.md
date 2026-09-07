@@ -1,4 +1,4 @@
-# alvarogalhardo.dev
+# alvarogalhardo.tech
 
 Site pessoal. Astro, estático, bilíngue por rota (`/` em inglês, `/pt` em
 português), tema claro e escuro.
@@ -59,8 +59,8 @@ Um único breakpoint em 700px; abaixo dele a navegação vira um drawer.
 
 ## Deploy
 
-Cloudflare Pages, servindo `dist/`. O `wrangler.toml` declara
-`pages_build_output_dir`, então o Cloudflare reconhece a saída sem configuração
-extra: build command `npm run build`, output `dist`, Node 22. O domínio vive em
-`astro.config.mjs` como `site` — canonical, `hreflang`, sitemap, feeds e OG
+Site estático no Cloudflare Pages: build `npm run build`, saída `dist`, Node
+fixado em `.nvmrc`. Cada merge no `main` publica; cada PR ganha um preview.
+`public/_headers` e `public/_redirects` são aplicados pela edge. O domínio vive
+em `astro.config.mjs` como `site` — canonical, `hreflang`, sitemap, feeds e OG
 images derivam desse valor.
