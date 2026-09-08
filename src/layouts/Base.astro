@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import newsreaderLatin from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
+import jetbrainsMonoLatin from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
 import ThemeScript from '../components/ThemeScript.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -14,9 +16,23 @@ interface Props {
   description: string;
   ogSlug?: string;
   translated?: boolean;
+  /** `og:type` — `website` for pages, `article` for posts. */
+  ogType?: string;
+  /** ISO date for `article:published_time` (posts only). */
+  publishedTime?: string;
+  /** `<meta name="robots">` value — set to keep a route out of the index (404s). */
+  robots?: string;
 }
 
-const { title, description, ogSlug = 'home', translated = true } = Astro.props;
+const {
+  title,
+  description,
+  ogSlug = 'home',
+  translated = true,
+  ogType = 'website',
+  publishedTime,
+  robots
+} = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const canonical = new URL(withTrailingSlash(Astro.url.pathname), Astro.site);
 const enHref = new URL(alternatePath(Astro.url, 'en'), Astro.site);
@@ -43,11 +59,14 @@ const person = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={newsreaderLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={jetbrainsMonoLatin} as="font" type="font/woff2" crossorigin="anonymous" />
     <ThemeScript />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonical} />
     {
       translated && (
@@ -60,7 +79,8 @@ const person = {
     }
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Alvaro Galhardo" />
     <meta property="og:locale" content={lang === 'pt' ? 'pt_BR' : 'en_US'} />

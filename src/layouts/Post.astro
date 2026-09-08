@@ -36,6 +36,8 @@ const article = {
   description={entry.data.summary}
   ogSlug={entry.id}
   translated={true}
+  ogType="article"
+  publishedTime={entry.data.date.toISOString()}
 >
   <script
     type="application/ld+json"
