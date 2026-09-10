@@ -4,6 +4,18 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://alvarogalhardo.tech',
+  build: {
+    // site de 2 páginas: inline todo o CSS — sem request bloqueante nem cadeia crítica
+    inlineStylesheets: 'always'
+  },
+  vite: {
+    build: {
+      // não inline asset como data: URI — mantém `font-src 'self'` da CSP intacto.
+      // Sem isto o Vite embute o subset cyrillic-ext da JetBrains Mono (<4 KB, nunca
+      // usado num site EN/PT) como data:font/woff2, que a CSP então bloqueia.
+      assetsInlineLimit: 0
+    }
+  },
   integrations: [
     mdx(),
     sitemap({
