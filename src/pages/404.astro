@@ -4,7 +4,12 @@ import NotFoundSection from '../components/NotFoundSection.astro';
 import { meta } from '../data/meta';
 ---
 
-<Base title={meta.en.notFound.title} description={meta.en.notFound.description} translated={false}>
+<Base
+  title={meta.en.notFound.title}
+  description={meta.en.notFound.description}
+  translated={false}
+  robots="noindex, follow"
+>
   <main class="wrap" id="top">
     <NotFoundSection />
   </main>

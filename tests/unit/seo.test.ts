@@ -38,6 +38,51 @@ describe('Open Graph', () => {
   });
 });
 
+describe('og:type e article:published_time', () => {
+  it('é website por padrão, sem article:published_time', async () => {
+    const html = await render('/');
+    expect(html).toContain('property="og:type" content="website"');
+    expect(html).not.toContain('article:published_time');
+  });
+
+  it('vira article com a data quando a página é um post', async () => {
+    const html = await render('/writing/lorem-transactions', {
+      ogType: 'article',
+      publishedTime: '2026-01-02T00:00:00.000Z'
+    });
+    expect(html).toContain('property="og:type" content="article"');
+    expect(html).toContain(
+      'property="article:published_time" content="2026-01-02T00:00:00.000Z"'
+    );
+  });
+});
+
+describe('robots', () => {
+  it('não emite meta robots quando a prop não é passada', async () => {
+    expect(await render('/')).not.toContain('name="robots"');
+  });
+
+  it('emite o valor recebido (404 fica fora do índice)', async () => {
+    expect(await render('/404', { robots: 'noindex, follow' })).toContain(
+      '<meta name="robots" content="noindex, follow"'
+    );
+  });
+});
+
+describe('preload de fonte', () => {
+  it('faz preload dos subsets latin de Newsreader e JetBrains Mono', async () => {
+    const html = await render('/');
+    const preloads = [...html.matchAll(/<link rel="preload"[^>]*as="font"[^>]*>/g)].map(
+      (m) => m[0]
+    );
+    expect(preloads).toHaveLength(2);
+    expect(preloads.every((p) => p.includes('crossorigin'))).toBe(true);
+    expect(preloads.every((p) => p.includes('type="font/woff2"'))).toBe(true);
+    expect(preloads.some((p) => /newsreader-latin-wght-normal[^"]*\.woff2/.test(p))).toBe(true);
+    expect(preloads.some((p) => /jetbrains-mono-latin-wght-normal[^"]*\.woff2/.test(p))).toBe(true);
+  });
+});
+
 describe('feed', () => {
   it('anuncia o feed do idioma só quando writingLive', async () => {
     const en = await render('/');

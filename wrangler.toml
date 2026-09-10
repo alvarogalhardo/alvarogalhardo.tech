@@ -12,3 +12,11 @@ directory = "./dist"
 # 404 em portugues. (o Workers rejeita status 404 em _redirects, entao nao ha
 # _redirects; ver .docs/architecture.md.)
 not_found_handling = "404-page"
+
+# Logs de runtime da edge no painel do Cloudflare. `invocation_logs = false`
+# porque um Worker assets-only nao roda codigo — so os logs de erro/warn
+# interessam. Nao afeta o build nem o deploy.
+[observability.logs]
+enabled = true
+invocation_logs = false
+persist = true

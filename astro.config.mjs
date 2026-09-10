@@ -7,9 +7,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // hreflang codes must match the on-page <link rel="alternate"> in Base.astro
+      // (language-only: targets every English / Portuguese reader, not one region).
+      // A mismatch makes Google discard the annotations.
       i18n: {
         defaultLocale: 'en',
-        locales: { en: 'en-US', pt: 'pt-BR' }
+        locales: { en: 'en', pt: 'pt' }
       }
     })
   ],
