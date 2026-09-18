@@ -16,25 +16,26 @@ const copy = home[lang].hero;
     <p class="about">{copy.p2}</p>
   </div>
   <div class="cta mono">
-    <a href="mailto:alvaromgfernandes@gmail.com" class="btn primary">{t('hero.cta.email')}</a>
-    <a href="https://github.com/alvarogalhardo" class="btn" rel="me noopener">GitHub</a>
+    <a href="mailto:alvaromgfernandes@gmail.com" target="_blank" class="btn primary">{t('hero.cta.email')}</a>
+    <a href="https://github.com/alvarogalhardo" class="btn" target="_blank" rel="me noopener noreferrer">GitHub</a>
   </div>
 </section>
 
 <style>
   .hero {
-    padding-block: 110px 76px;
+    padding-block: 34px 76px;
   }
   .role {
     margin-bottom: 22px;
-    font-size: 11px;
+    font-size: 15px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
+    font-style: bold;
   }
   h1 {
     margin-bottom: 30px;
-    font-size: clamp(2.375rem, 6vw, 3.5rem);
+    font-size: clamp(2.25rem, 5.4vw, 3.125rem);
     line-height: 1.04;
     letter-spacing: -0.02em;
     text-wrap: balance;
@@ -45,13 +46,11 @@ const copy = home[lang].hero;
     gap: 18px;
   }
   .lead {
-    max-width: 54ch;
     font-size: 20px;
     line-height: 1.58;
     text-wrap: pretty;
   }
   .about {
-    max-width: 58ch;
     font-size: 17px;
     line-height: 1.74;
     color: var(--muted);
@@ -86,7 +85,7 @@ const copy = home[lang].hero;
 
   @media (max-width: 700px) {
     .hero {
-      padding-block: 62px 52px;
+      padding-block: 26px 52px;
     }
     h1 {
       line-height: 1.1;
