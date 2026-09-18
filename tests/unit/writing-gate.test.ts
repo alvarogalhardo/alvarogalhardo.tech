@@ -3,23 +3,27 @@ import ShelfSection from '../../src/components/ShelfSection.astro';
 import ContactSection from '../../src/components/ContactSection.astro';
 import WritingArchive from '../../src/components/WritingArchive.astro';
 import { writingLive } from '../../src/data/site';
+import { sectionNum } from '../../src/lib/sections';
 import { renderComponent, SITE } from './helpers';
 
 const at = (Comp: unknown, path = '/', props: Record<string, unknown> = {}) =>
   renderComponent(Comp, { url: `${SITE}${path}`, props });
 
-// Enquanto não há post publicado, writingLive é false: a seção 03 some da home
-// e estante/contato sobem um número. Ao publicar o primeiro post, virar
-// src/data/site.ts e estes números voltam para 04/05.
+// Enquanto não há post publicado, writingLive é false: a seção de writing some
+// da home e estante/contato sobem um número. A ordem canônica vive em
+// src/lib/sections.ts, e o que estes testes checam é que o componente
+// renderiza exatamente o número que aquela ordem calcula.
 describe('numeração das seções segue writingLive', () => {
-  it('estante é 03 sem writing, 04 com', async () => {
+  it('estante renderiza o número da ordem', async () => {
     const num = (await at(ShelfSection)).match(/class="num"[^>]*>(\d\d)</)?.[1];
-    expect(num).toBe(writingLive ? '04' : '03');
+    expect(num).toBe(sectionNum('shelf'));
+    expect(num).toBe(writingLive ? '05' : '04');
   });
 
-  it('contato é 04 sem writing, 05 com', async () => {
+  it('contato renderiza o número da ordem', async () => {
     const num = (await at(ContactSection)).match(/class="num"[^>]*>(\d\d)</)?.[1];
-    expect(num).toBe(writingLive ? '05' : '04');
+    expect(num).toBe(sectionNum('contact'));
+    expect(num).toBe(writingLive ? '06' : '05');
   });
 });
 

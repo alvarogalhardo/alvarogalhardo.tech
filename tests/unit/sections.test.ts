@@ -4,9 +4,12 @@ import ProjectsSection from '../../src/components/ProjectsSection.astro';
 import WritingSection from '../../src/components/WritingSection.astro';
 import ShelfSection from '../../src/components/ShelfSection.astro';
 import ContactSection from '../../src/components/ContactSection.astro';
+import SkillsSection from '../../src/components/SkillsSection.astro';
 import Footer from '../../src/components/Footer.astro';
 import { experience } from '../../src/data/experience';
 import { books } from '../../src/data/books';
+import { skills } from '../../src/data/skills';
+import { sectionNum } from '../../src/lib/sections';
 import { renderComponent, SITE } from './helpers';
 
 const at = (Comp: unknown, path: string, props: Record<string, unknown> = {}) =>
@@ -43,6 +46,40 @@ describe('ExperienceSection', () => {
   });
 });
 
+describe('SkillsSection', () => {
+  it('renderiza uma linha por grupo', async () => {
+    expect(countRows(await at(SkillsSection, '/'))).toBe(skills.length);
+  });
+  it('expõe a âncora #skills', async () => {
+    expect(await at(SkillsSection, '/')).toContain('id="skills"');
+  });
+  it('renderiza um chip por item do grupo', async () => {
+    const html = await at(SkillsSection, '/');
+    for (const item of skills[0].items) {
+      expect(html).toContain(`>${item.name}</li>`);
+    }
+  });
+  it('marca com a classe core só os itens principais', async () => {
+    const html = await at(SkillsSection, '/');
+    const core = skills.flatMap((g) => g.items).filter((i) => i.core);
+    expect((html.match(/class="chip core"/g) ?? []).length).toBe(core.length);
+  });
+  it('põe os principais antes do resto dentro do grupo', () => {
+    for (const g of skills) {
+      const flags = g.items.map((i) => Boolean(i.core));
+      expect(flags).toEqual([...flags].sort((a, b) => Number(b) - Number(a)));
+    }
+  });
+  it('traduz o rótulo do grupo', async () => {
+    expect(await at(SkillsSection, '/pt')).toContain(skills[0].label.pt);
+    expect(await at(SkillsSection, '/')).toContain(skills[0].label.en);
+  });
+  it('usa o número que vem da ordem das seções', async () => {
+    const html = await at(SkillsSection, '/');
+    expect(html.match(/class="num"[^>]*>(\d\d)</)?.[1]).toBe(sectionNum('skills'));
+  });
+});
+
 describe('ProjectsSection', () => {
   it('renderiza um card por projeto recebido', async () => {
     const html = await at(ProjectsSection, '/', { projects });
@@ -54,6 +91,11 @@ describe('ProjectsSection', () => {
   });
   it('usa a url externa quando o projeto tem uma', async () => {
     expect(await at(ProjectsSection, '/', { projects })).toContain('href="https://example.com/one"');
+  });
+  it('o link externo do projeto abre em nova aba com rel de segurança', async () => {
+    const html = await at(ProjectsSection, '/', { projects });
+    expect((html.match(/target="_blank"/g) ?? []).length).toBe(1);
+    expect(html).toContain('rel="noopener noreferrer"');
   });
   it('projeto sem url não vira link nem mostra a seta', async () => {
     const html = await at(ProjectsSection, '/', { projects });
@@ -83,6 +125,9 @@ describe('WritingSection', () => {
     expect(html).toContain('href="/pt/writing/"');
     expect(html).toContain('Todos os textos');
   });
+  it('os links internos continuam na mesma aba', async () => {
+    expect(await at(WritingSection, '/', { posts })).not.toContain('target="_blank"');
+  });
 });
 
 describe('ShelfSection', () => {
@@ -105,7 +150,11 @@ describe('ContactSection', () => {
   });
   it('os links externos têm rel de segurança', async () => {
     const html = await at(ContactSection, '/');
-    expect((html.match(/rel="me noopener"/g) ?? []).length).toBe(2);
+    expect((html.match(/rel="me noopener noreferrer"/g) ?? []).length).toBe(2);
+  });
+  it('email, linkedin e github abrem em nova aba', async () => {
+    const html = await at(ContactSection, '/');
+    expect((html.match(/target="_blank"/g) ?? []).length).toBe(3);
   });
 });
 

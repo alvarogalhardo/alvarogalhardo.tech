@@ -4,12 +4,12 @@ import MetaRow from './MetaRow.astro';
 import { books } from '../data/books';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { home } from '../data/copy';
-import { writingLive } from '../data/site';
+import { sectionNum } from '../lib/sections';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const note = home[lang].shelfNote;
-const num = writingLive ? '04' : '03';
+const num = sectionNum('shelf');
 ---
 
 <section id="shelf" class="section">
@@ -34,7 +34,6 @@ const num = writingLive ? '04' : '03';
   }
   .note {
     margin-bottom: 14px;
-    max-width: 56ch;
     font-size: 16px;
     font-style: italic;
     line-height: 1.66;

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import ExperienceSection from '../components/ExperienceSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
 import WritingSection from '../components/WritingSection.astro';
 import ShelfSection from '../components/ShelfSection.astro';
@@ -19,6 +20,7 @@ const posts = writingLive ? toPostCards(await getCollection('writing'), 'en', 3)
   <main class="wrap" id="top">
     <Hero />
     <ExperienceSection />
+    <SkillsSection />
     <ProjectsSection projects={projects} />
     {writingLive && <WritingSection posts={posts} />}
     <ShelfSection />

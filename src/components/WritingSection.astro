@@ -1,6 +1,7 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import MetaRow from './MetaRow.astro';
+import { sectionNum } from '../lib/sections';
 import type { PostCardData } from '../lib/content';
 import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
 
@@ -17,7 +18,7 @@ const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
 ---
 
 <section id="writing" class="section">
-  <SectionHeading num="03" label={t('nav.writing')} />
+  <SectionHeading num={sectionNum('writing')} label={t('nav.writing')} />
   <div id="writing-list">
     {
       posts.map((p) => (

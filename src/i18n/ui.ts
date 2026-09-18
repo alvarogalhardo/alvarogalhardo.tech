@@ -3,11 +3,12 @@ export const defaultLang = 'en' as const;
 export const ui = {
   en: {
     'nav.experience': 'Experience',
+    'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.writing': 'Writing',
     'nav.books': 'Bookshelf',
     'nav.contact': 'Contact',
-    'hero.role': 'Backend Engineer',
+    'hero.role': 'Software Engineer',
     'hero.cta.email': 'Email',
     'hero.cta.resume': 'Résumé',
     'writing.all': 'All posts',
@@ -27,11 +28,12 @@ export const ui = {
   },
   pt: {
     'nav.experience': 'Experiência',
+    'nav.skills': 'Tecnologias',
     'nav.projects': 'Projetos',
     'nav.writing': 'Escritos',
     'nav.books': 'Estante',
     'nav.contact': 'Contato',
-    'hero.role': 'Engenheiro Backend',
+    'hero.role': 'Engenheiro de Software',
     'hero.cta.email': 'Email',
     'hero.cta.resume': 'Currículo',
     'writing.all': 'Todos os textos',

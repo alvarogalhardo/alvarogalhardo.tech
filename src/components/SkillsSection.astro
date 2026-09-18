@@ -1,0 +1,72 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import MetaRow from './MetaRow.astro';
+import { skills } from '../data/skills';
+import { sectionNum } from '../lib/sections';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="skills" class="section">
+  <SectionHeading num={sectionNum('skills')} label={t('nav.skills')} />
+  <div id="skills-list">
+    {
+      skills.map((g) => (
+        <MetaRow meta={g.label[lang]} align="baseline" pad="md">
+          <ul class="mono items">
+            {g.items.map((item) => (
+              <li class:list={['chip', item.core && 'core']}>{item.name}</li>
+            ))}
+          </ul>
+        </MetaRow>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: 16px 72px;
+  }
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .chip {
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 7px 13px;
+    color: var(--muted);
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+  /* O que ele defende de imediato: mesmo chip, peso maior, sem depender de cor. */
+  .core {
+    border-color: var(--lineControl);
+    color: var(--fg);
+  }
+  .chip:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--bg);
+  }
+  @media (max-width: 700px) {
+    .section {
+      padding-block: 12px 52px;
+    }
+    .items {
+      gap: 7px;
+      font-size: 13px;
+    }
+    .chip {
+      padding: 6px 11px;
+    }
+  }
+</style>
