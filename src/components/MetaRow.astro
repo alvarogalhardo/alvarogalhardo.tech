@@ -7,9 +7,16 @@ interface Props {
 }
 const { meta, href, align = 'top', pad = 'lg' } = Astro.props;
 const Tag = href ? 'a' : 'div';
+const external = Boolean(href && /^https?:\/\//.test(href));
 ---
 
-<Tag class:list={['row', `align-${align}`, `pad-${pad}`]} href={href} data-reveal>
+<Tag
+  class:list={['row', `align-${align}`, `pad-${pad}`]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  data-reveal
+>
   <span class="mono meta">{meta}</span>
   <div class="body"><slot /></div>
 </Tag>
