@@ -11,16 +11,16 @@ describe('Hero.astro', () => {
   });
 
   it('mostra o cargo em inglês na raiz', async () => {
-    expect(await render('/')).toContain('Backend Engineer');
+    expect(await render('/')).toContain('Software Engineer');
   });
 
   it('mostra o cargo em português sob /pt', async () => {
-    expect(await render('/pt')).toContain('Engenheiro Backend');
+    expect(await render('/pt')).toContain('Engenheiro de Software');
   });
 
   it('traduz a saudação', async () => {
     expect(await render('/pt')).toContain('Oi, eu sou o Alvaro.');
-    expect(await render('/')).toContain('Hey, I');
+    expect(await render('/')).toContain('Hi, I');
   });
 
   it('o cta de email é um mailto', async () => {
@@ -28,7 +28,11 @@ describe('Hero.astro', () => {
   });
 
   it('o link externo do github tem rel de segurança', async () => {
-    expect(await render('/')).toMatch(/rel="me noopener"/);
+    expect(await render('/')).toMatch(/rel="me noopener noreferrer"/);
+  });
+
+  it('os ctas abrem em nova aba', async () => {
+    expect((await render('/')).match(/target="_blank"/g) ?? []).toHaveLength(2);
   });
 
   it('não usa data-reveal — protege o LCP', async () => {

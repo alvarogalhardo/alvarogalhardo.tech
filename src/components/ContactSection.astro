@@ -2,21 +2,21 @@
 import SectionHeading from './SectionHeading.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { home } from '../data/copy';
-import { writingLive } from '../data/site';
+import { sectionNum } from '../lib/sections';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const line = home[lang].contactLine;
-const num = writingLive ? '05' : '04';
+const num = sectionNum('contact');
 ---
 
 <section id="contact" class="section">
   <SectionHeading num={num} label={t('nav.contact')} />
   <p class="line" data-reveal>{line}</p>
   <div class="cta mono" id="contact-list" data-reveal>
-    <a href="mailto:alvaromgfernandes@gmail.com" class="btn primary">{t('hero.cta.email')}</a>
-    <a href="https://www.linkedin.com/in/alvarogalhardo" class="btn" rel="me noopener">LinkedIn</a>
-    <a href="https://github.com/alvarogalhardo" class="btn" rel="me noopener">GitHub</a>
+    <a href="mailto:alvaromgfernandes@gmail.com" target="_blank" class="btn primary">{t('hero.cta.email')}</a>
+    <a href="https://www.linkedin.com/in/alvarogalhardo" class="btn" target="_blank" rel="me noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/alvarogalhardo" class="btn" target="_blank" rel="me noopener noreferrer">GitHub</a>
   </div>
 </section>
 
@@ -26,7 +26,7 @@ const num = writingLive ? '05' : '04';
   }
   .line {
     margin-bottom: 24px;
-    max-width: 40ch;
+    max-width: 46ch;
     font-size: 32px;
     line-height: 1.28;
     letter-spacing: -0.015em;

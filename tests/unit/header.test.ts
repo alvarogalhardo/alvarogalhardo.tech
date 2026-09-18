@@ -81,8 +81,8 @@ describe('Header — drawer mobile', () => {
   it('o drawer repete os links do nav mais contato', async () => {
     const html = await render('/');
     const links = html.match(/data-menu-link/g) ?? [];
-    // work, projects, (writing só se writingLive), shelf, contact
-    expect(links).toHaveLength(writingLive ? 5 : 4);
+    // work, skills, projects, (writing só se writingLive), shelf, contact
+    expect(links).toHaveLength(writingLive ? 6 : 5);
     expect(html).toContain('Contact');
   });
 

@@ -1,6 +1,7 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import MetaRow from './MetaRow.astro';
+import { sectionNum } from '../lib/sections';
 import { experience } from '../data/experience';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
@@ -9,7 +10,7 @@ const t = useTranslations(lang);
 ---
 
 <section id="work" class="section">
-  <SectionHeading num="01" label={t('nav.experience')} />
+  <SectionHeading num={sectionNum('work')} label={t('nav.experience')} />
   <div id="work-list">
     {
       experience.map((e) => (
@@ -37,7 +38,6 @@ const t = useTranslations(lang);
     color: var(--muted);
   }
   .desc {
-    max-width: 54ch;
     font-size: 16px;
     line-height: 1.66;
     color: var(--muted);

@@ -10,6 +10,7 @@ const otherHref = alternatePath(Astro.url, other);
 
 const nav = [
   { href: `${home}#work`, label: t('nav.experience') },
+  { href: `${home}#skills`, label: t('nav.skills') },
   { href: `${home}#projects`, label: t('nav.projects') },
   ...(writingLive ? [{ href: `${home}#writing`, label: t('nav.writing') }] : []),
   { href: `${home}#shelf`, label: t('nav.books') }
@@ -20,7 +21,7 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
 <header>
   <div class="wrap bar mono">
     <a href={home} class="brand">
-      <span class="dot" aria-hidden="true"></span><span>Alvaro</span>
+      <span class="dot" aria-hidden="true"></span><span>Alvaro Galhardo</span>
     </a>
 
     <nav class="desktop" aria-label={t('menu.title')}>
@@ -96,6 +97,7 @@ const drawerNav = [...nav, { href: `${home}#contact`, label: t('nav.contact') }]
     display: flex;
     align-items: center;
     gap: 9px;
+    font-size: 15px;
     color: var(--fg);
   }
   .dot {

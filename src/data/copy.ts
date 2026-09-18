@@ -21,23 +21,23 @@ type NotFoundCopy = {
 export const home: Record<Lang, HomeCopy> = {
   en: {
     hero: {
-      greeting: 'Hey, I’m Alvaro.',
-      lead: 'I’m a backend-leaning full-stack engineer who cares about the APIs, data models, and infrastructure choices that decide whether a system holds up once real users and real money touch it.',
-      p1: 'Right now I’m building the backend for a B2B invoice-anticipation platform at Pagô: a financial calculation engine that has to match regulatory rules exactly, plus the fraud checks that sit in front of it. Before that I worked across full-stack SaaS products in C#, TypeScript, and React, mostly on the parts other people didn’t want to touch: async job processing, multi-tenant data models, CI/CD pipelines.',
-      p2: 'Most of what I read these days is systems books instead of blog posts: right now that’s Designing Data-Intensive Applications and Introduction to Algorithms. engram, one of the projects below, is where that reading turns into real decisions.'
+      greeting: 'Hi, I’m Alvaro.',
+      lead: 'I’m a full-stack software engineer with a stronger interest in the back-end. My expertise covers the full development flow, from requirements to maintenance. I work mainly on data modeling, API and system design, and infrastructure decisions, delivering robust and scalable solutions.',
+      p1: 'With three years of professional experience and currently studying Software Engineering at FIAP, I’m fascinated by systems that are complex, reliable, and that add value to the business.',
+      p2: 'In my most recent role, I worked on a B2B receivables anticipation platform (Risco Sacado) at Pagô. The biggest challenge there was modeling a financial calculation engine compliant with regulatory requirements, while keeping the product consistent and reliable.'
     },
-    contactLine: 'Open to backend and full-stack roles right now. Get in touch.',
-    shelfNote: 'What I’m actually reading right now, not a curated highlight reel.'
+    contactLine: 'Open to backend and full-stack roles. Get in touch.',
+    shelfNote: 'What I’m reading currently:'
   },
   pt: {
     hero: {
       greeting: 'Oi, eu sou o Alvaro.',
-      lead: 'Sou engenheiro backend que também atua full-stack, focado nas APIs, modelos de dados e decisões de infraestrutura que definem se um sistema aguenta o uso real, não só a demonstração.',
-      p1: 'Hoje trabalho no back-end de uma plataforma de antecipação de recebíveis B2B na Pagô: um motor de cálculo financeiro que precisa bater exatamente com as regras regulatórias, além dos mecanismos antifraude na frente dele. Antes disso passei por produtos SaaS full-stack em C#, TypeScript e React, principalmente nas partes que ninguém mais queria mexer: processamento assíncrono, modelos de dados multi-tenant, pipelines de CI/CD.',
-      p2: 'A maior parte do que leio hoje em dia é livro de sistemas em vez de post de blog: agora é Designing Data-Intensive Applications e Introduction to Algorithms. O engram, um dos projetos abaixo, é onde essa leitura vira decisão de verdade.'
+      lead: 'Sou um engenheiro de software full-stack, com maior interesse no back-end. Minha expertise contempla o fluxo completo do desenvolvimento, desde os requisitos até a manutenção. Atuo principalmente na modelagem de dados, design de APIs e sistemas, e decisões de infraestrutura, entregando soluções robustas e escaláveis.',
+      p1: 'Com três anos de experiência profissional e cursando Engenharia de Software na FIAP, sou fascinado por sistemas complexos, confiáveis e que agregam valor para o negócio.',
+      p2: 'Em minha experiência mais recente, trabalhei no desenvolvimento de uma plataforma de antecipação de recebíveis (Risco Sacado) B2B na Pagô. Nesse projeto, o maior desafio foi modelar um motor de cálculo financeiro em conformidade com os requisitos regulatórios, mantendo a consistência e confiabilidade do produto.'
     },
-    contactLine: 'Estou aberto a vagas de backend ou full-stack agora. Entre em contato.',
-    shelfNote: 'O que eu realmente estou lendo agora, não uma lista só para inglês ver.'
+    contactLine: 'Estou aberto a vagas para backend e full-stack. Entre em contato.',
+    shelfNote: 'O que estou lendo agora:'
   }
 };
 

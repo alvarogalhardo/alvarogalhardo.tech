@@ -1,6 +1,7 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import MetaRow from './MetaRow.astro';
+import { sectionNum } from '../lib/sections';
 import type { ProjectCardData } from '../lib/content';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
@@ -13,7 +14,7 @@ const t = useTranslations(lang);
 ---
 
 <section id="projects" class="section">
-  <SectionHeading num="02" label={t('nav.projects')} />
+  <SectionHeading num={sectionNum('projects')} label={t('nav.projects')} />
   <div id="projects-list">
     {
       projects.map((p) => (
@@ -49,7 +50,6 @@ const t = useTranslations(lang);
     color: var(--accent);
   }
   .desc {
-    max-width: 54ch;
     font-size: 16px;
     line-height: 1.66;
     color: var(--muted);
